@@ -97,45 +97,98 @@ Given an input array, $V$ return a new array, $U$ such that $U_i = V_i - 1$.
 
 
 \subsection{General Program Synthesis Benchmark Suite}
-\todo[inline]{Where were problems found}
 The second set of problems used in this comparison was proposed by \cite{Helmuth2015b} in order to provide the field of Genetic Programming with a set of non-trivial benchmark problems.
 
 This problems set included problems that deal with multiple data types, including strings, numbers, boolean and vectors. There are also multiple problems in the set that require multiple output values, or printing certain values to the screen.
 
 Given that the Basic Execution Models problem set is designed to test a systems ability to perform in low-level domains (binary circuits, assembly language, etc), the General Program Synthesis Benchmark Suite is an excellent addition, given that the problems' origins assume a much higher-level implementation (ie. java).
 
-\subsubsection{Number IO}
-Given an integer and a float, print their sum.
-\subsubsection{Small or Large}
-\subsubsection{For Loop Index}
-\subsubsection{Compare String Lengths}
-\subsubsection{Double Letters}
-\subsubsection{Collatz Numbers}
-\subsubsection{Replace Space with Newline}
-\subsubsection{String Differences}
-\subsubsection{Even Squares}
-\subsubsection{Wallis Pi}
-\subsubsection{String Lengths Backwards}
-\subsubsection{Last Index of Zero}
-\subsubsection{Vector Average}
-\subsubsection{Count Odds}
-\subsubsection{Mirror Image}
-\subsubsection{Super Anagrams}
-\subsubsection{Sum of Squares}
-\subsubsection{Vectors Summed}
-\subsubsection{X-Word Lines}
-\subsubsection{Pig Latin}
-\subsubsection{Negative To Zero}
-\subsubsection{Scrabble Score}
-\subsubsection{Word Stats}
-\subsubsection{Checksum}
-\subsubsection{Digits}
-\subsubsection{Grade}
-\subsubsection{Median}
-\subsubsection{Smallest}
-\subsubsection{Syllables}
+%\subsubsection{Number IO}
+%\subsubsection{Small or Large}
+%\subsubsection{For Loop Index}
+%\subsubsection{Compare String Lengths}
+%\subsubsection{Double Letters}
+%\subsubsection{Collatz Numbers}
+%\subsubsection{Replace Space with Newline}
+%\subsubsection{String Differences}
+%\subsubsection{Even Squares}
+%\subsubsection{Wallis Pi}
+%\subsubsection{String Lengths Backwards}
+%\subsubsection{Last Index of Zero}
+%\subsubsection{Vector Average}
+%\subsubsection{Count Odds}
+%\subsubsection{Mirror Image}
+%\subsubsection{Super Anagrams}
+%\subsubsection{Sum of Squares}
+%\subsubsection{Vectors Summed}
+%\subsubsection{X-Word Lines}
+%\subsubsection{Pig Latin}
+%\subsubsection{Negative To Zero}
+%\subsubsection{Scrabble Score}
+%\subsubsection{Word Stats}
+%\subsubsection{Checksum}
+%\subsubsection{Digits}
+%\subsubsection{Grade}
+%\subsubsection{Median}
+%\subsubsection{Smallest}
+%\subsubsection{Syllables}
 
 \section{Results}
+
+\begin{figure}
+\begin{tabular}{ r | c c c c }
+	& TerpreT & Flash Fill & MH & PushGP \\
+	\hline
+	Invert & \checkmark &  & \checkmark & \checkmark \\
+	Prepend Zero & \checkmark & \checkmark & \checkmark & \checkmark \\
+	Binary Decrement & \checkmark &  &  &  \\
+	2BCSR & \checkmark &  &  & \checkmark \\
+	Full Adder & \checkmark &  &  & \checkmark \\
+	2 Bit Adder & \checkmark &  &  &  \\
+	Access & \checkmark &  & \checkmark & \checkmark \\
+	Decrement & \checkmark &  & \checkmark & \checkmark \\
+\end{tabular}
+\caption{Results of all 4 systems on the Basic Execution Models problems from \cite{Gaunt2016}. A check denotes the system could find a solution.}
+\label{fig:results1}
+\end{figure}
+
+\begin{figure}
+\begin{tabular}{ r | c c c c }
+	& Flash Fill & MH & PushGP \\
+	\hline
+	Number IO &  & \checkmark & \checkmark  \\
+	Small Or Large &  &  & \checkmark  \\
+	For Loop Index & ? &  & \checkmark  \\
+	Compare String Lengths & ? &  & \checkmark  \\
+	Double Letters & ? &  & \checkmark  \\
+	Collatz Numbers & ? &  &   \\
+	Replace Space with Newline & ? &  & \checkmark  \\
+	String Differences & ? &  &   \\
+	Even Squares & ? &  & \checkmark  \\
+	Wallis Pi & ? &  &   \\
+	String Lengths Backwards & ? & \checkmark  & \checkmark \\
+	Last Index of Zero & ? &  & \checkmark  \\
+	Vector Average & ? & \checkmark & \checkmark  \\
+	Count Odds & ? &  & \checkmark  \\
+	Mirror Image & ? &  & \checkmark  \\
+	Super Anagrams & ? &  & \checkmark  \\
+	Sum of Squares & ? &  & \checkmark  \\
+	Vectors Summed & ? & \checkmark & \checkmark  \\
+	X-Word Lines & ? &  & \checkmark  \\
+	Pig Latin & ? &  & \checkmark  \\
+	Negative To Zero & ? & \checkmark & \checkmark  \\
+	Scrabble Score & ? &  & \checkmark  \\
+	Word Stats & ? &  &   \\
+	Checksum & ? &  &   \\
+	Digits & ? &  & \checkmark  \\
+	Grade & ? &  & \checkmark  \\
+	Median & ? &  & \checkmark  \\
+	Smallest & ? & \checkmark & \checkmark  \\
+	Syllables & ? &  & \checkmark  \\
+\end{tabular}
+\caption{Results of all 4 systems on the Basic Execution Models problems from \cite{Gaunt2016}. A check denotes the system could find a solution.}
+\label{fig:results2}
+\end{figure}
 
 \section{Conclusion}
 
