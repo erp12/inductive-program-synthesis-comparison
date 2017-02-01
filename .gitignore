@@ -1,4 +1,5 @@
 # Paper-specific files
+*.pdf
 paper/comment.cut
 
 ## Core latex/pdflatex auxiliary files:
