@@ -2,7 +2,8 @@
 
 \usepackage{todonotes}
 \usepackage{outlines}
-\usepackage{ amssymb }
+\usepackage{amssymb}
+\usepackage{listings}
 
 % Copyright
 %\setcopyright{none}
@@ -30,8 +31,7 @@
 
 
 \begin{document}
-\title{Genetic Programming Is Best At Software Synthesis}
-\subtitle{A work in progress title}
+\title{Analysis of Inductive Program Synthesis Techniques on General Program Synthesis Tasks}
 
 \author{Edward Pantridge}
 \affiliation{
@@ -72,7 +72,7 @@
 
 
 \begin{abstract}
-	A variety of inductive program synthesis (IPS) techniques have emerged from a variety of research fields in recent decades. These techniques are beginning to be applied in many modern contexts\cite{Gulwani2011}\cite{Katayama2013}. However, these techniques have not been adequately compared on sufficiently demonstrative problems. In this paper, several state-of-the-art methods of IPS are compared across a comprehensive set of problems that search for programs dealing with various levels of abstraction, data types, control structures and number of outputs. Although there are many helpful metrics to consider when comparing these methods, this comparison is mainly focused on success rate. 
+	A variety of inductive program synthesis (IPS) techniques have emerged from a spread of research fields in recent decades. However, these techniques have not been adequately compared on general program synthesis tasks. In this paper, several state-of-the-art methods of inductive program synthesis are compared across a set of problems involving the search for programs dealing with various data types, control structures and number of outputs. The problem set also spans tasks that are generally approached using languages at the level of machine code, assembly language, and higher level languages. Although there are many helpful metrics to consider when comparing these methods, this comparison is mainly focused on success rate. The systems investigated in this paper include: Flash Fill, Magic Haskeller, TerpreT, and Genetic Programming. After comparing the solution rates of these methods on the problem set, the results suggest that Genetic Programming and, to an extent, TerpreT are more capable of finding solutions than Flash Fill and Magic Haskeller.
 \todo[inline]{Keywords}
 \end{abstract}
 
