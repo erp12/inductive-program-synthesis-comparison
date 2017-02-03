@@ -31,7 +31,7 @@
 
 
 \begin{document}
-\title{Analysis of Inductive Program Synthesis Techniques on General Program Synthesis Tasks}
+\title{Comparison of Inductive Program Synthesis Techniques applied to General Program Synthesis Problems}
 
 \author{Edward Pantridge}
 \affiliation{
@@ -72,7 +72,7 @@
 
 
 \begin{abstract}
-	A variety of inductive program synthesis (IPS) techniques have emerged from a spread of research fields in recent decades. However, these techniques have not been adequately compared on general program synthesis tasks. In this paper, several state-of-the-art methods of inductive program synthesis are compared across a set of problems involving the search for programs dealing with various data types, control structures and number of outputs. The problem set also spans tasks that are generally approached using languages at the level of machine code, assembly language, and higher level languages. Although there are many helpful metrics to consider when comparing these methods, this comparison is mainly focused on success rate. The systems investigated in this paper include: Flash Fill, Magic Haskeller, TerpreT, and Genetic Programming. After comparing the solution rates of these methods on the problem set, the results suggest that Genetic Programming and, to an extent, TerpreT are more capable of finding solutions than Flash Fill and Magic Haskeller.
+A variety of inductive program synthesis techniques have recently been developed, emerging from different areas of computer science. However, these techniques have not been adequately compared on general program synthesis problems. In this paper we compare several methods on problems requiring solution programs to handle various data types, control structures, and numbers of outputs. The problem set also spans levels of abstraction; some would ordinarily be approached using machine code or assembly language, while others would ordinarily be approached using high-level languages. The presented comparisons are focused on success rate; that is, on the proportion of runs that produce programs that pass all tests, for all training and unseen testing inputs. The compared systems are Flash Fill, Magic Haskeller, TerpreT, and two forms of genetic programming. The two genetic programming methods chosen were PushGP and Grammar Guided Genetic Programming. The results suggest that PushGP and, to an extent, TerpreT and Grammar Guided Genetic Programming are more capable of finding solutions than the others, albeit at a higher computational cost.
 \todo[inline]{Keywords}
 \end{abstract}
 

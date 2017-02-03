@@ -78,11 +78,22 @@ Genetic Programming works by generating a initial population of random programs.
 
 \subsubsection{PushGP}
 
-For this comparison, PushGP was selected as the Gennetic Programming method. PushGP evolves programs in a Turing complete, stack based language called Push. Push features separate stacks for each data type, including code. Push programs are lists of instructions and literals. Literals are values that get placed on the stack corrisponding to their type. Instructions are built-in functions that pop values off the stacks, modify them, and push them back on the appropriate stacks. Programs are run through an interpreter, which modifies the stacks. After all instructions and literals have been processed through the interpreter, the final state of the stacks is the output of the program \cite{Spector2002}.
+For this comparison, PushGP was selected as the Genetic Programming method. PushGP evolves programs in a Turing complete, stack based language called Push. Push features separate stacks for each data type, including code. Push programs are lists of instructions and literals. Literals are values that get placed on the stack corrisponding to their type. Instructions are built-in functions that pop values off the stacks, modify them, and push them back on the appropriate stacks. Programs are run through an interpreter, which modifies the stacks. After all instructions and literals have been processed through the interpreter, the final state of the stacks is the output of the program \cite{Spector2002}.
 
-\todo[inline]{Why PushGP for IPS?}
+PushGP was chosen as the Genetic Programming method because of its ability to evolve programs that can do the following:
+\begin{itemize}
+\item Manipulate all basic data types, including vectors.
+\item Return multiple outputs.
+\item Utilize iteration, recursion, and other control structures.
+\end{itemize}
+
+Given that the chosen problem set contains general software tasks that require all three of the above listed features, most commonly used Genetic Programming systems would be unable to adequately attempt to find a solution. Recently, there have been some notable exceptions to this that warrant further research.
 
 Implementations of PushGP systems are available in the Clojure programming language\footnote{https://github.com/lspector/Clojush}, as well as a new implementation in python\footnote{https://github.com/erp12/Pysh}.
+
+\subsubsection{Grammar Guided Genetic Programming (G3P)}
+
+\todo[inline]{Write me!}
 
 \section{Problems}
 \subsection{Basic Execution Models Problems}
@@ -162,6 +173,10 @@ Given that the Basic Execution Models problem set is designed to test a systems 
 %\subsubsection{Smallest}
 %\subsubsection{Syllables}
 
+\section{Limitation of Comparison}
+
+\todo[inline]{Write me!}
+
 \section{Results}
 
 \todo[inline]{Which problems were not able to be posed to certain systems}
@@ -180,43 +195,43 @@ Given that the Basic Execution Models problem set is designed to test a systems 
 	Access & \checkmark & x & \checkmark & \checkmark \\
 	Decrement & \checkmark & x & \checkmark & \checkmark \\
 \end{tabular}
-\caption{Results of all 4 systems on the Basic Execution Models problems from \cite{Gaunt2016}.  A check denotes the system could find a solution. An x denotes the problem was fully posed to the system, but a solution was not found. All problems were able to be fully posed to each system.}
+\caption{Results of all 4 systems on the Basic Execution Models problems from \cite{Gaunt2016}.  A check denotes the system could find a solution. An x denotes the problem was fully posed to the system, but a solution was not found. The G3P system has not been tested on this problem set to our knowledge.}
 \label{fig:results1}
 \end{figure}
 
 \begin{figure}
 \begin{tabular}{ r | c c c c }
-	& Flash Fill & MH & PushGP \\
+	& Flash Fill & MH & PushGP & G3P \\
 	\hline
-	Number IO & x & \checkmark & \checkmark  \\
-	Small Or Large & x & x & \checkmark  \\
-	For Loop Index &   & x & \checkmark  \\
-	Compare String Lengths & ? & x & \checkmark  \\
-	Double Letters & ? & x & \checkmark  \\
-	Collatz Numbers & ? & x & x \\
-	Replace Space with Newline &   & x & \checkmark  \\
-	String Differences &   & x & x \\
-	Even Squares &   & x & \checkmark  \\
-	Wallis Pi & ? & x & x \\
-	String Lengths Backwards &   & \checkmark  & \checkmark \\
-	Last Index of Zero & ? & x & \checkmark  \\
-	Vector Average & ? & \checkmark & \checkmark  \\
-	Count Odds & ? & x & \checkmark  \\
-	Mirror Image & ? & x & \checkmark  \\
-	Super Anagrams & ? & x & \checkmark  \\
-	Sum of Squares & ? & x & \checkmark  \\
-	Vectors Summed & ? & \checkmark & \checkmark  \\
-	X-Word Lines &   & x & \checkmark  \\
-	Pig Latin & ? & x & \checkmark  \\
-	Negative To Zero &   & \checkmark & \checkmark  \\
-	Scrabble Score & ? & x & \checkmark  \\
-	Word Stats &   & x & x \\
-	Checksum & ? & x & x \\
-	Digits &   & x & \checkmark  \\
-	Grade & ? & x & \checkmark  \\
-	Median & ? & x & \checkmark  \\
-	Smallest & ? & \checkmark & \checkmark  \\
-	Syllables & ? & x & \checkmark  \\
+	Number IO & x & \checkmark & \checkmark & \checkmark \\
+	Small Or Large & x & x & \checkmark & \checkmark \\
+	For Loop Index & x & x & \checkmark & \checkmark \\
+	Compare String Lengths & x & x & \checkmark & \checkmark \\
+	Double Letters & x & x & \checkmark & x \\
+	Collatz Numbers & x & x & x \\
+	Replace Space with Newline &   & x & \checkmark & x \\
+	String Differences & x & x & x \\
+	Even Squares & x & x & \checkmark & \checkmark \\
+	Wallis Pi & x & x & x \\
+	String Lengths Backwards &   & \checkmark  & \checkmark & \checkmark \\
+	Last Index of Zero &  & x & \checkmark & \checkmark \\
+	Vector Average &  & \checkmark & \checkmark & x \\
+	Count Odds &  & x & \checkmark & \checkmark \\
+	Mirror Image &  & x & \checkmark & \checkmark \\
+	Super Anagrams & x & x & x & \checkmark \\
+	Sum of Squares & x & x & \checkmark & \checkmark \\
+	Vectors Summed &  & \checkmark & \checkmark & \checkmark \\
+	X-Word Lines & x & x & \checkmark & x \\
+	Pig Latin & x & x & x  \\
+	Negative To Zero &  & \checkmark & \checkmark & \checkmark \\
+	Scrabble Score & x & x & \checkmark & x \\
+	Word Stats & x & x & x \\
+	Checksum & x & x & \checkmark \\
+	Digits & x & x & \checkmark & x \\
+	Grade & x & x & \checkmark & \checkmark  \\
+	Median & x & x & \checkmark & \checkmark \\
+	Smallest & x & \checkmark & \checkmark & \checkmark \\
+	Syllables & x & x & \checkmark & x \\
 \end{tabular}
 \caption{Results of all 3 systems on the Software Synthesis Benchmark Suite from \cite{Helmuth2015b}. A check denotes the system could find a solution. An x denotes the problem was fully posed to the system, but a solution was not found. No symbol denotes the problem could not be fully posed to the system.}
 \label{fig:results2}
