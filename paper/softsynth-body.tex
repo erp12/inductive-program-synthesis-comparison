@@ -17,8 +17,6 @@ The conclusions drawn from this comparison will speak to the flexibility of each
 
 Below are descriptions of the five inductive program synthesis techniques compared in our experiments.
 
-\todo[inline]{Tom: Eddie, feel free to remove citations or text from what I added below if you need space. Most of the citations aren't very important, and the text could be trimmed, if need be.}
-
 \subsection{Flash Fill}
 
 Flash Fill, recently added to Microsoft Excel, uses version-space algebras to perform program synthesis from examples on string manipulation tasks \cite{Gulwani2011}. It was designed to help non-programmers perform repetitive tasks that would otherwise require them to write Excel macro programs. As such, it is able to quickly create simple programs for one-off repetitive tasks in spreadsheet applications for non-programmers \cite{Gulwani:2012:SDM:2240236.2240260, harris2011spreadsheet, Singh:2012:LSS:2212351.2212356, singh2012synthesizing}. Building on the use of version-space algebras for programming by demonstration \cite{lau2003programming}, Flash Fill assumes few example inputs and must make simplifying assumptions about the problem space. In particular, the domain-specific language used here is designed for small string manipulation tasks that an end-user may want to perform without knowing how to program them. Adapting the technique for new domains would require a different domain-specific language that is carefully crafted to meet problem requirements while restrictive enough to allow for quick searching. Each different domain-specific language would also require a new synthesis technique; it is unclear whether Flash Fill will even be able to tackle many general program synthesis problems.
@@ -81,52 +79,50 @@ PushGP was chosen as a comparison method because of its ability to evolve progra
 
 Given that the chosen problem set contains general software tasks that require all three of the above listed features, most commonly used Genetic Programming systems would be unable to adequately attempt to find a solution. Recently, there have been some notable exceptions to this that warrant further research.
 
-Implementations of PushGP systems are available in the Clojure programming language\footnote{https://github.com/lspector/Clojush}, as well as a new implementation in Python\footnote{https://github.com/erp12/Pysh}.
+Implementations of PushGP systems are available in the Clojure programming language\footnote{https://github.com/lspector/Clojush}, as well as a new implementation in Python\footnote{https://github.com/erp12/Pysh}. The Basic Execution Models problems were run in the Python implementation of PushGP and the General Program Synthesis Benchmark Suite problems were run in the Clojure implementation. In both implementations, the instruction sets and genetic operators were identically implemented for this comparison.
 
 \subsubsection{Grammar Guided Genetic Programming (G3P)}
 
-Here's the citation \cite{Forstenlechner:2017:eurogp}.
+The second genetic programming system used in this comparison is Grammar Guided Genetic Programming (G3P). It was recently shown by \cite{Forstenlechner:2017:eurogp} that G3P can perform well on general IPS tasks if implemented in a particular way.
 
-\todo[inline]{Write me!}
+The G3P system described in\cite{Forstenlechner:2017:eurogp} requires the specification of a Grammar and a Skeleton. 
+
+The G3P system's grammar is composed of a separate context free grammar for each data type. Supported data types include: booleans, integers, floats, strings, lists of booleans, lists of integers, lists of floats, and lists of strings. There is also an addition grammar for the structure of the program.  These grammars are defined in Backus-Naur Form. Together these grammars form a single, general grammar that can be used to attempt arbitrary program synthesis tasks.
+
+Aside from the grammar, the G3P system must be provided a skeleton. This skeleton contains the signature of the function that is going to be evolved. The signature specifies the inputs to the function and the return statement. In order to help avoid runtime errors, functions that implement protected operations (ie. division and logarithm) can also be included in the skeleton.
+
+When an individual in the G3P system is to be evaluated, the code from the individual is placed into the function signature, thus creating a complete function that can be executed. The output of this function on the test cases is compared to the target outputs to receive and error vector.
+
+As part of the G3P grammar definition, it is required to specify the number of variables usable by the system.~\cite{Forstenlechner:2017:eurogp} claims that 3 variables per data type is sufficient for all problems.
 
 \section{Problems}
+
 \subsection{Basic Execution Models Problems}
 The first set of 8 problems, taken from \cite{Gaunt2016}, was designed to demonstrate TerpreT's ability to synthesis programs in a variety of execution models that span multiple levels of abstraction. These execution models are: Turing Machine, Boolean Circuits, Basic Block, and Assembly Language. As stated by \cite{Gaunt2016}, the problems in this set progress from more abstract execution models towards models which resemble assembly languages. These problems demonstrate how a system performs across a variety of low-level domains. 
 The problems in this set are described below:
 
-\subsubsection{Invert}
 
-Given a binary string (binary tape), invert all the bits.
+\begin{description}
 
-\todo[inline]{Tom: It might be good to explicitly describe, here or elsewhere, how you represent things like binary strings in each system. Such as, in Push, are these binary vectors of integers? Binary character strings? How about in Flash Fill and MH?}
+\item[Invert] Given a binary string (binary tape), invert all the bits. 
 
-\subsubsection{Prepend Zero}
+\item[Prepend Zero] Insert a $0$ in the first index of a binary string and shift all other bits to the right.
 
-Insert a $0$ in the first index of a binary string and shift all other bits to the right.
+\item[Binary Decrement] Given an input binary string equal to a positive decimal number, return a binary string equal to the input number decremented by one.
 
-\subsubsection{Binary Decrement}
+\item[2-bit Controlled Shift Register] Given input bit ($r_1$, $r_2$, $r_3$), return the same bits, except swap the order of $r_2$ and $r_1$ if $r_1 == 1$.
 
-Given an input binary string equal to a positive decimal number, return a binary string equal to the input number decremented by one.
+\item[Full Adder] Given a carry bit, $c_{in}$, and two argument bits, $a$ and $b$ , output a sum bit, $s$, and carry bit, $c_{out}$, such that  $s + 2c_{out} = c_{in} + a_1 + b_1$.
 
-\subsubsection{2-bit Controlled Shift Register}
+\item[2-bit Adder] Given input bits $a_1$, $a_2$, $b_1$, and $b_2$, output $s_1$, $s_2$, and $c_{out}$ such that  $s_1 + 2s_2 + 4c_{out} = a_1 + b_1 + 2(a_2 + b_2)$.
 
-Given input bit ($r_1$, $r_2$, $r_3$), return the same bits, except swap the order of $r_2$ and $r_1$ if $r_1 == 1$.
+\item[Access] Given an input array, $V$, and a positive integer, $i$, return $V_i$. Assume $0 < i < |A|$.
 
-\subsubsection{Full Adder}
+\item[Decrement] Given an input array, $V$ return a new array, $U$ such that $U_i = V_i - 1$.
 
-Given a carry bit, $c_{in}$, and two argument bits, $a$ and $b$ , output a sum bit, $s$, and carry bit, $c_{out}$, such that  $s + 2c_{out} = c_{in} + a_1 + b_1$.
+\end{description}
 
-\subsubsection{2-bit Adder}
-
-Given input bits $a_1$, $a_2$, $b_1$, and $b_2$, output $s_1$, $s_2$, and $c_{out}$ such that  $s_1 + 2s_2 + 4c_{out} = a_1 + b_1 + 2(a_2 + b_2)$.
-
-\subsubsection{Access}
-
-Given an input array, $V$, and a positive integer, $i$, return $V_i$. Assume $0 < i < |A|$.
-
-\subsubsection{Decrement}
-
-Given an input array, $V$ return a new array, $U$ such that $U_i = V_i - 1$.
+In Flash Fill, binary strings were implemented as strings of $1$s and $0$s in a single cell that was set to the type "Text". In all other systems, the binary strings were implemented using vectors of boolean values.
 
 
 \subsection{General Program Synthesis Benchmark Suite}
@@ -170,7 +166,6 @@ Since we do not have space to describe all 29 problems here, consdering the foll
 
 \section{Limitation of Comparison}
 
-\todo[inline]{Write me!}
 The problems described in section 3 were chosen to demonstrate a system's ability to perform general program synthesis tasks. Each system considered in the comparison is designed for different situations which resulted in a difficult comparison.
 
 \subsection{Support For Multiple Outputs}
@@ -181,9 +176,13 @@ Flash Fill only supports populating cells in a single column at once. The only w
 
 MagicHaskeller also only supports synthesizing programs that produce a single output, however MagicHaskeller supports the tuple data type. Given that elements of a tuple do not have to be of the same data type, it was deemed adequate for MagicHaskeller to produce a single tuple containing all outputs for problems that required multiple outputs. For problems that called for printing values, one of the elements of the output tuple would be a string containing all printed text, including newlines.
 
+The G3P grammars do not contain any methods of printing or formatting output values. Thus, any problems that required the use of printing or outputs given in a particular format (ie. A string with values printed on particular lines) must have been implemented in a way that did not require these behaviors. This implies that the G3P system was not posed the exact same IPS tasks, albeit very similar ones.
+
 \subsection{Supported Data Types}
 
 Many problems in the comparison required the handling of multiple data types, often including vectors.  Excel does not include a native vector or list data structure, and it is not clear what the best way to phrase problems that require vectors to Flash Fill. A string representation of vectors was attempted for some problems. If a problem specifies an input value will be a vector of fixed length, the problem can be posed with each element of the vector in its own cell. If the vector's length is not fixed, this cannot be done, because a tabular structure cannot be formed. If a problem requires a vector output, it cannot be posed to Flash Fill with elements in their own cell because generating each output value would be a separate IPS task. Due to this shortcoming of Flash Fill, there are a number of problems in this comparison that Flash Fill was unable to attempt.
+
+G3P supports list types, but the supported list types contain values of a single data type. In other words, G3P can create and manipulate integer lists that can only contain integer values. There is no list type that can hold values of arbitrary types. This limitation, combined with the previous mentioned lack of printing methods, resulted in no adequate G3P implementation of the "string differences" problem.
 
 \subsection{Number of Training and Test Cases}
 
@@ -193,14 +192,11 @@ The number of nested predicates that can be given to MagicHaskeller is very limi
 
 There is not publicly available implementation of TerpreT, and thus it is only known how TerpreT performs on the \emph{Basic Execution Models} problem set. It is unknown how TerpreT would perform on the \emph{General Program Synthesis Benchmark Suite}.
 
+Given how recently the G3P system for general program synthesis was presented, it has not been applied to the \emph{Basic Execution Models} problem set. These results would be informative and likely be fairly easy to obtain.
+
 Flash Fill is not open-source, which makes it impossible to modify for new tasks.
 
-\todo[inline]{TODO: Find out of G3P is available.}
-
 \section{Results}
-
-\todo[inline]{Which problems were not able to be posed to certain systems}
-\todo[inline]{Which systems performed better on which problems}
 
 \begin{figure}
 \begin{tabular}{ r | c c c c }
@@ -257,8 +253,23 @@ Flash Fill is not open-source, which makes it impossible to modify for new tasks
 \label{fig:results2}
 \end{figure}
 
+Although inductive program synthesis is often thought of as a single field, it is clear from this comparison that IPS methods are generally implemented with a narrow domain in mind. This is made most evident by the limitations discussed in section 4. After making strong efforts to overcome these limitations, the results of applying each IPS method to the problem sets described in section 2 were compiled into Figure \ref{fig:results1} and Figure \ref{fig:results2}.
 
+Flash Fill performed particularly poorly on the the considered problems. Being designed for string manipulation, it is not surprising that it can only solve the "Prepend Zero" problem, where the input binary string is implemented as a text string of $1$s and $0$s. On all other problems, Flash Fill does not produce a solution. This is not unexpected because no other problem is solely comprised of such simple text manipulation.
 
+MagicHaskeller was only able to solve 10 out of the 37 problems it was applied to. These problems tended to mainly involve applying simple operations to each element of a vector, or simple aggregation forms of aggregation.
+
+% Terpret Problems
+The system that performed the best on the \emph{Basic Execution Models} problems was TerpreT, while PushGP failed to solve 2 of the 8 problems. Given the success of TerpreT in this domain, it would be interesting to know how the system performs on the \emph{Software Synthesis Benchmark Suite}. The only system for which there is no results on the \emph{Basic Execution Models} problems is G3P. These results would be very informative and relatively simple to obtain. Given how recently this specific G3P technique was posed these results have not been gathered yet.
+
+% Software Benchmark Problems
+Both genetic programming systems clearly outperformed Flash Fill and MagicHaskeller on the \emph{Software Synthesis Benchmark Suite}. PushGP solved  23 out of the 29 problems, and G3P solved 16 of the 29 problems.
+
+% Runtime and deterministic/stocastic
+It must be mentioned that there is an enormous difference in runtime and computation power required for these IPS systems. FlashFill and MagicHaskeller produce an output, or report failure, in near instantaneous time. TerpreT, PushGP  and G3P require many hours to complete a single run and due to their stochastic nature, often require many runs. It is not entirely uncommon to spend weeks of CPU time on multiple PushGP runs of a single problem and only encounter a small number of solutions, meanwhile MagicHaskeller can produce the same solution every time, nearly instantaneously. 
+
+% Output readability
+Some of the considered IPS methods were designed with other functionality in mind, aside from solving IPS task. For example, MagicHaskeller, G3P, and TerpreT produce readable source code. PushGP produces code in the Push language, but it cannot be used outside of a Push interpreter and is not easily read by humans. FlashFill does not provide any access to the solution program.
 
 \section{Conclusion}
 
@@ -266,9 +277,6 @@ Flash Fill is not open-source, which makes it impossible to modify for new tasks
 
 \section{Things to mention somewhere}
 \begin{itemize}
- \item Differences in runtime
- \item FashFill and MagicHaskeller come up with same thing every time. GP might not.
  \item Can you extract the solution program? Is it readable?
- \item We used boolean vectors as binary tape from TerpreT problems.
- \item We considered the Access problem and the List-k problem to be synonymous in most contexts.
+ \item Checksum has since been solved.
 \end{itemize}
