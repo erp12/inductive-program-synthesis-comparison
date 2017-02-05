@@ -1,103 +1,25 @@
 \section{Introduction}
 
-Since the creation of Inductive Program Synthesis (IPS) in the 1970s\cite{Kitzelmann2009}, researchers have been striving to create systems capable of generating programs competitively with human intelligence. Modern IPS methods often trace their roots to the fields of machine learning, logic programming, evolutionary computation and others.
+Since the creation of Inductive Program Synthesis (IPS) in the 1970~\cite{Kitzelmann2009}, researchers have been striving to create systems capable of generating programs competitively with human intelligence. Modern IPS methods often trace their roots to the fields of machine learning, logic programming, evolutionary computation and others.
 
-The similarities and differences of these methods have been discussed\cite{Kitzelmann2009}, but their performance is rarely compared on problem sets that could provide concrete insight into the capabilities and limitations of each method.
+Some IPS systems, such as MagicHaskeller, were created to be used as a teaching tool for people learning to program in the Haskell language. Other IPS systems have been used to perform Automated Program Repair~\cite{Perelman2014} to fix bugs in human written code.
 
-A demonstrative problem set has been compiled that assess an IPS method's ability to work within a range of levels of abstraction\cite{Gaunt2016}, manipulate a variety of data types, produce complex control structures and produce an arbitrary number of outputs of various forms\cite{Helmuth2015b}.
+As IPS systems become better at generating the same kinds of programs humans would generally write, there will likely be many more applications that have large impacts on the fields of machine learning, artificial intelligence, and software development.
 
-\todo{We need to define exactly what we mean by ``solution'', since it's different
-	for GP and, e.g., MagicHaskeller. GP won't \emph{always} find a solution.}
+The similarities and differences of IPS methods have been discusse~\cite{Kitzelmann2009}, but their performance is rarely compared on problem sets that could provide concrete insight into the capabilities and limitations of each method.
 
-This investigation is exclusively considering a methods ability to find solutions. Other measures, such as runtime or hardware models, are not thoroughly examined. In order to determine if a method can find solutions to a problem, the problem must first be phrased in its entirety to the method. This is not always possible.
+This is largely due to how recently many of current methods have been introduced. TerpreT and the Grammar Guided Genetic Programming system proposed in~\cite{Forstenlechner:2017:eurogp} have been published for less than a year. Flash Fill and Magic Haskeller were both introduced in the 2010s. PushGP, although first publish in 2002, has been improved greatly on IPS tasks in recent years~\cite{Helmuth2015a}.
 
-The conclusions drawn from this comparison will speak to the flexibility of each considered method, as well as each method's success rate.
+A demonstrative problem set has been compiled that assess an IPS method's ability to work within a range of levels of abstraction~\cite{Gaunt2016}, manipulate a variety of data types, produce complex control structures and produce an arbitrary number of outputs of various forms~\cite{Helmuth2015b}.
 
-\section{Current State of the Art}
+This investigation is exclusively considering each method's ability to find solutions. Other measures, such as runtime or hardware models, are not thoroughly examined. In order to determine if a method can find solutions to a problem, the problem must first be phrased in its entirety to the method. This is not always possible.
 
-Below are descriptions of the five inductive program synthesis techniques compared in our experiments.
-
-\subsection{Flash Fill}
-
-Flash Fill, recently added to Microsoft Excel, uses version-space algebras to perform program synthesis from examples on string manipulation tasks \cite{Gulwani2011}. It was designed to help non-programmers perform repetitive tasks that would otherwise require them to write Excel macro programs. As such, it is able to quickly create simple programs for one-off repetitive tasks in spreadsheet applications for non-programmers \cite{Gulwani:2012:SDM:2240236.2240260, harris2011spreadsheet, Singh:2012:LSS:2212351.2212356, singh2012synthesizing}. Building on the use of version-space algebras for programming by demonstration \cite{lau2003programming}, Flash Fill assumes few example inputs and must make simplifying assumptions about the problem space. In particular, the domain-specific language used here is designed for small string manipulation tasks that an end-user may want to perform without knowing how to program them. Adapting the technique for new domains would require a different domain-specific language that is carefully crafted to meet problem requirements while restrictive enough to allow for quick searching. Each different domain-specific language would also require a new synthesis technique; it is unclear whether Flash Fill will even be able to tackle many general program synthesis problems.
-
-To test Flash Fills performance with our problem set, an Excel spreadsheet with one column per input and one column for output was created for each problem. Each spreadsheet included training data, which had both the input and output column populated, and unseen testing data, which left the output column cells empty. Flash Fill is deterministic and analytic, thus it was only run once per problem on a single data set.
-
-It is not possible to pose tasks to Flash Fill that required multiple outputs. This includes problems that require printing values in addition to returning an output. Asking Flash Fill to generate each output value in separate cell was considered, but this would be two separate tasks and would not be comparable to other the other IPS methods.
-
-\subsection{MagicHaskeller}
-
-MagicHaskeller \cite{katayama2010,Katayama05} synthesizes functional Haskell programs through an exhaustive search of programs with the correct type signatures. It uses a Monte-Carlo algorithm to remove semantically equivalent programs from the search space \cite{Katayama2008}. More recently, it has also integrated an analytic component based on \textsc{Igor2} \cite{kitzelmann2011two}, which allows it to synthesize a greater range of programs than can be found in reasonable time using exhaustive search \cite{katayama2011magichaskeller}. Additionally, a web interface is available running a time-limited version of MagicHaskeller intended as a Haskell teaching tool for new programmers \cite{katayama2013}. These implementations make great use of Haskell's functional instructions, and they perform well on problems that require list manipulations and structural changes. While MagicHaskeller performs very quickly on simple problems without too many examples, it has trouble with problems that require a large number of examples to illuminate the relevant edge cases. Additionally, it seems to have trouble with problems that require conditional control flow.
-
-MagicHaskeller uses specifications in the form of a predicate consisting of example function calls and their desired outputs. To then synthesize a function, MagicHaskeller generates a stream of functions that have the same signature as the example function calls. Thus generated functions have the same number of inputs, the same input types, the same number of outputs, and the same output types.
-Generated functions are tested against the input predicate, and a sample of passing functions are presented to the user. The user can then "Exemplify" the suggested solution functions to see how they would behave given a variety of other inputs. If the user cannot find an adequate solution function, more functions can be generated until the entire stream has been processed.
-
-For our experiments, we used the web hosted version of MagicHaskeller. When using the MagicHaskeller web service, all MagicHaskeller users share the same dynamic programming table used for memoization, and the users cannot select which functions are included when searching. Due to MagicHaskeller being hosted on the web, it is difficult to embed MagicHaskeller in other systems.
-
-\begin{figure}
-\begin{verbatim}
-((f [1, 2, 3] == [0, 1, 2]) && (f [-1, 1] == [-2, 0]))  
-\end{verbatim}
-\caption{An example predicate that can be supplied to MagicHaskeller. This particular predicate produces a solution to the Decrement problem.}
-\label{fig:MHpred}
-\end{figure}
-
-Figure \ref{fig:MHpred} shows an example input predicate. Notice that multiple nested predicates can be supplied. MagicHaskeller supports the common primitive data types such as: integers, floats, strings and characters. Vectors and tuples are also supported, witch greatly expands the number of problems that were able to be posed to MagicHaskeller.
-
-MagicHaskeller only allows for the synthesis of functions that produce a single output value. In order to pose question that require multiple outputs, MagicHaskeller was given predicates that specified a tuple as an output. For problems that specify that values should be printed in addition to the output value, it was considered sufficient if MagicHaskeller could synthesis a program that produced a single string containing all printed values (including whitespace and newline) as an element of its output tuple.
-
-\subsection{TerpreT}
-
-TerpreT is a recently developed, probabilistic programming language that is designed for inductive program synthesis \cite{Gaunt2016}. Problems are specified in the TerpreT language, which is then translated into four different back-end inference algorithms: Forward Marginals Gradient Descent (FMGD), Integer Linear Programming (ILP), Satisfiability modulo theories (SMT) and SKETCH.
-The TerpreT system attempts to solve IPS problems using these back-end algorithms and returns source code containing the successful parameters found by the successful back-end algorithm, if one is present.
-
-Note that there is currently no publicly available implementation of TerpreT and thus only results on benchmark problems provided by the original authors could be obtained. It would be extremely valuable to compare TerpreT's performance on the rest of the problem set using in this paper once an implementation becomes available.
-
-\subsection{Genetic Programming}
-
-Soon after the rise of evolutionary computation, John R. Koza recognized that evolution could be used for more than optimizing a fixed structure of values. In the 1990s, Koza built upon genetic algorithms in such a way that produced executable programs. This technique, named Genetic Programming (GP), is considered inductive program synthesis because it uses input-output examples (refered to as test cases in the field of GP) to evolve a function. In fact, IPS was one of the origional motivations for creating the field of GP \cite{Koza1992}. 
-
-Genetic Programming works by generating a initial population of random programs. Traditionally these programs are represented as trees where non-leaf nodes each denote a function. The children of each non-leaf node are used as the arguments to their parents. Leaf nodes denote terminal values that could be either a constant or input value. This initial population of random programs then follows the cycle in Figure \ref{fig:evo}  until a solution is found or the run is considered a failure.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.25\textwidth]{res/EvolutionCycle}
-\caption{Evolutionary Computation process.}
-\label{fig:evo}
-\end{figure}
-
-\subsubsection{PushGP}
-
-Our first comparison genetic program system, PushGP, evolves programs in a Turing complete, stack based language called Push \cite{Spector2002, Spector2005}. Push features separate stacks for each data type, including code. Push programs are lists of instructions and literals. Literals are values that get placed on the stack corrisponding to their type. Instructions are built-in functions that pop values off the stacks, modify them, and push them back on the appropriate stacks. Programs are run through an interpreter, which modifies the stacks. After all instructions and literals have been processed through the interpreter, the final state of the stacks is the output of the program.
-
-PushGP was chosen as a comparison method because of its ability to evolve programs that can do the following:
-\begin{itemize}
-\item Manipulate all basic data types, including vectors.
-\item Return multiple outputs.
-\item Utilize iteration, recursion, conditional execution, and other more exotic control structures.
-\end{itemize}
-
-Given that the chosen problem set contains general software tasks that require all three of the above listed features, most commonly used Genetic Programming systems would be unable to adequately attempt to find a solution. Recently, there have been some notable exceptions to this that warrant further research.
-
-Implementations of PushGP systems are available in the Clojure programming language\footnote{https://github.com/lspector/Clojush}, as well as a new implementation in Python\footnote{https://github.com/erp12/Pysh}. The Basic Execution Models problems were run in the Python implementation of PushGP and the General Program Synthesis Benchmark Suite problems were run in the Clojure implementation. In both implementations, the instruction sets and genetic operators were identically implemented for this comparison.
-
-\subsubsection{Grammar Guided Genetic Programming (G3P)}
-
-The second genetic programming system used in this comparison is Grammar Guided Genetic Programming (G3P). It was recently shown by \cite{Forstenlechner:2017:eurogp} that G3P can perform well on general IPS tasks if implemented in a particular way.
-
-The G3P system described in\cite{Forstenlechner:2017:eurogp} requires the specification of a Grammar and a Skeleton. 
-
-The G3P system's grammar is composed of a separate context free grammar for each data type. Supported data types include: booleans, integers, floats, strings, lists of booleans, lists of integers, lists of floats, and lists of strings. There is also an addition grammar for the structure of the program.  These grammars are defined in Backus-Naur Form. Together these grammars form a single, general grammar that can be used to attempt arbitrary program synthesis tasks.
-
-Aside from the grammar, the G3P system must be provided a skeleton. This skeleton contains the signature of the function that is going to be evolved. The signature specifies the inputs to the function and the return statement. In order to help avoid runtime errors, functions that implement protected operations (ie. division and logarithm) can also be included in the skeleton.
-
-When an individual in the G3P system is to be evaluated, the code from the individual is placed into the function signature, thus creating a complete function that can be executed. The output of this function on the test cases is compared to the target outputs to receive and error vector.
-
-As part of the G3P grammar definition, it is required to specify the number of variables usable by the system.~\cite{Forstenlechner:2017:eurogp} claims that 3 variables per data type is sufficient for all problems.
+The conclusions drawn from this comparison will speak to the flexibility, and success rate, of each considered method when applied to general IPS tasks.
 
 \section{Problems}
 
 \subsection{Basic Execution Models Problems}
+
 The first set of 8 problems, taken from \cite{Gaunt2016}, was designed to demonstrate TerpreT's ability to synthesis programs in a variety of execution models that span multiple levels of abstraction. These execution models are: Turing Machine, Boolean Circuits, Basic Block, and Assembly Language. As stated by \cite{Gaunt2016}, the problems in this set progress from more abstract execution models towards models which resemble assembly languages. These problems demonstrate how a system performs across a variety of low-level domains. 
 The problems in this set are described below:
 
@@ -164,6 +86,95 @@ Since we do not have space to describe all 29 problems here, consdering the foll
 %\subsubsection{Smallest}
 %\subsubsection{Syllables}
 
+\section{Current State of the Art}
+
+Below are descriptions of the five inductive program synthesis techniques compared in our experiments.
+
+\subsection{Flash Fill}
+
+Flash Fill, recently added to Microsoft Excel, uses version-space algebras to perform program synthesis from examples on string manipulation tasks~\cite{Gulwani2011}. It was designed to help non-programmers perform repetitive tasks that would otherwise require them to write Excel macro programs. As such, it is able to quickly create simple programs for one-off repetitive tasks in spreadsheet applications for non-programmers~\cite{Gulwani:2012:SDM:2240236.2240260, harris2011spreadsheet, Singh:2012:LSS:2212351.2212356, singh2012synthesizing}. Building on the use of version-space algebras for programming by demonstration~\cite{lau2003programming}, Flash Fill assumes few example inputs and must make simplifying assumptions about the problem space. In particular, the domain-specific language used here is designed for small string manipulation tasks that an end-user may want to perform without knowing how to program them. Adapting the technique for new domains would require a different domain-specific language that is carefully crafted to meet problem requirements while restrictive enough to allow for quick searching. Each different domain-specific language would also require a new synthesis technique; it is unclear whether Flash Fill will even be able to tackle many general program synthesis problems.
+
+To test Flash Fills performance with our problem set, an Excel spreadsheet with one column per input and one column for output was created for each problem. Each spreadsheet included training data, which had both the input and output column populated, and unseen testing data, which left the output column cells empty. Flash Fill is deterministic and analytic, thus it was only run once per problem on a single data set.
+
+It is not possible to pose tasks to Flash Fill that required multiple outputs. This includes problems that require printing values in addition to returning an output. Asking Flash Fill to generate each output value in separate cell was considered, but this would be two separate tasks and would not be comparable to other the other IPS methods.
+
+\subsection{MagicHaskeller}
+
+MagicHaskeller~\cite{katayama2010,Katayama05} synthesizes functional Haskell programs through an exhaustive search of programs with the correct type signatures. It uses a Monte-Carlo algorithm to remove semantically equivalent programs from the search space~\cite{Katayama2008}. More recently, it has also integrated an analytic component based on \textsc{Igor2}~\cite{kitzelmann2011two}, which allows it to synthesize a greater range of programs than can be found in reasonable time using exhaustive search~\cite{katayama2011magichaskeller}. Additionally, a web interface is available running a time-limited version of MagicHaskeller intended as a Haskell teaching tool for new programmers~\cite{katayama2013}. These implementations make great use of Haskell's functional instructions, and they perform well on problems that require list manipulations and structural changes. While MagicHaskeller performs very quickly on simple problems without too many examples, it has trouble with problems that require a large number of examples to illuminate the relevant edge cases. Additionally, it seems to have trouble with problems that require conditional control flow.
+
+MagicHaskeller uses specifications in the form of a predicate consisting of example function calls and their desired outputs. To then synthesize a function, MagicHaskeller generates a stream of functions that have the same signature as the example function calls. Thus generated functions have the same number of inputs, the same input types, the same number of outputs, and the same output types.
+
+Generated functions are tested against the input predicate, and a sample of passing functions are presented to the user. The user can then "Exemplify" the suggested solution functions to see how they would behave given a variety of other inputs. If the user cannot find an adequate solution function, more functions can be generated until the entire stream has been processed.
+
+For our experiments, we used the web hosted version of MagicHaskeller. When using the MagicHaskeller web service, all MagicHaskeller users share the same dynamic programming table used for memoization, and the users cannot select which functions are included when searching. Due to MagicHaskeller being hosted on the web, it is difficult to embed MagicHaskeller in other systems. One benefit of using the publicly hosted version of MegicHaskeller is that users can suggest new contributions to the dynamic programming table, which potentially improves the search space for all users upon the next update of the MagicHaskeller system. 
+
+\begin{figure}
+\begin{verbatim}
+((f [1, 2, 3] == [0, 1, 2]) && (f [-1, 1] == [-2, 0]))  
+\end{verbatim}
+\caption{An example predicate that can be supplied to MagicHaskeller. This particular predicate produces a solution to the Decrement problem.}
+\label{fig:MHpred}
+\end{figure}
+
+Figure \ref{fig:MHpred} shows an example input predicate. Notice that multiple nested predicates can be supplied. MagicHaskeller supports the common primitive data types such as: integers, floats, strings and characters. Vectors and tuples are also supported, witch greatly expands the number of problems that were able to be posed to MagicHaskeller.
+
+MagicHaskeller only allows for the synthesis of functions that produce a single output value. In order to pose question that require multiple outputs, MagicHaskeller was given predicates that specified a tuple as an output. For problems that specify that values should be printed in addition to the output value, it was considered sufficient if MagicHaskeller could synthesis a program that produced a single string containing all printed values (including whitespace and newline) as an element of its output tuple.
+
+\subsection{TerpreT}
+
+TerpreT is a recently developed, probabilistic programming language that is designed for inductive program synthesis~\cite{Gaunt2016}. Problems are specified in the TerpreT language, which is then translated into four different back-end inference algorithms: Forward Marginals Gradient Descent (FMGD), Integer Linear Programming (ILP), Satisfiability modulo theories (SMT) and SKETCH.
+The TerpreT system attempts to solve IPS problems using these back-end algorithms and returns source code containing the successful parameters found by the successful back-end algorithm, if one is present.
+
+Note that there is currently no publicly available implementation of TerpreT and thus only results on benchmark problems provided by the original authors could be obtained. It would be extremely valuable to compare TerpreT's performance on the rest of the problem set using in this paper once an implementation becomes available.
+
+\subsection{Genetic Programming}
+
+Before the 1990s, evolutionary algorithms were generally only used for optimizing a fixed structure of values. Eventually, this was built upon in such as way that produced executable programs. This technique, named Genetic Programming (GP), is considered inductive program synthesis because it uses input-output examples (refered to as test cases in the field of GP) to evolve a function. In fact, IPS was one of the original motivations for early work in GP~\cite{Koza1992}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.25\textwidth]{res/EvolutionCycle}
+\caption{Evolutionary Computation process.}
+\label{fig:evo}
+\end{figure}
+
+Genetic Programming works by generating a initial population of random programs.  This these random programs then follows the cycle in Figure \ref{fig:evo} until a solution is found or the run is considered a failure. To evaluate a program, it is given set of inputs and executed. The set of outputs produced by the program is compared with the desired outputs in order to produce a set of errors. 
+
+This set of errors is used in the selection phase to pick programs whose performance merit them to be parents of the next generation of the population. This is done via a variety of selection algorithms, although for IPS tasks it has been shown that lexicase selection generally leads to more solutions~\cite{Helmuth2015a, Helmuth2015c, Forstenlechner:2017:eurogp}.
+
+The selected parent programs are then recombined using a series of genetic operators in the variation phase of evolution. This results in a new generation of programs that share traits with their programs but are generally never identical.
+
+After a program is produced that outputs the desired values on all input test cases, evolution is stopped and the program is tested on a entirely separate set of inputs to confirm generalization. If the program produces all correct outputs on the second set of inputs, it is considered a solution.
+
+\subsubsection{PushGP}
+
+Our first comparison genetic program system, PushGP, evolves programs in a Turing complete, stack based language called Push~\cite{Spector2002, Spector2005}. Push features separate stacks for each data type, including code. Push programs are lists of instructions and literals. Literals are values that get placed on the stack corresponding to their type. Instructions are built-in functions that pop values off the stacks, modify them, and push them back on the appropriate stacks. Programs are run through an interpreter, which modifies the stacks. After all instructions and literals have been processed through the interpreter, the final state of the stacks is the output of the program.
+
+PushGP was chosen as a comparison method because of its ability to evolve programs that can do the following:
+\begin{itemize}
+\item Manipulate all basic data types, including vectors.
+\item Return multiple outputs.
+\item Utilize iteration, recursion, conditional execution, and other more exotic control structures.
+\end{itemize}
+
+Given that the chosen problem set contains general software tasks that require all three of the above listed features, most commonly used Genetic Programming systems would be unable to adequately attempt to find a solution. Recently, there have been some notable exceptions to this that warrant further research.
+
+Implementations of PushGP systems are available in the Clojure programming language\footnote{https://github.com/lspector/Clojush}, as well as a new implementation in Python\footnote{https://github.com/erp12/Pysh}. The Basic Execution Models problems were run in the Python implementation of PushGP and the General Program Synthesis Benchmark Suite problems were run in the Clojure implementation. In both implementations, the instruction sets and genetic operators were identically implemented for this comparison.
+
+\subsubsection{Grammar Guided Genetic Programming (G3P)}
+
+The second genetic programming system used in this comparison is Grammar Guided Genetic Programming (G3P). It was recently shown by~\cite{Forstenlechner:2017:eurogp} that G3P can perform well on general IPS tasks if implemented in a particular way.
+
+The G3P system described in~\cite{Forstenlechner:2017:eurogp} requires the specification of a Grammar and a Skeleton. 
+
+The G3P system's grammar is composed of a separate context free grammar for each data type. Supported data types include: booleans, integers, floats, strings, lists of booleans, lists of integers, lists of floats, and lists of strings. There is also an addition grammar for the structure of the program.  These grammars are defined in Backus-Naur Form. Together these grammars form a single, general grammar that can be used to attempt arbitrary program synthesis tasks.
+
+Aside from the grammar, the G3P system must be provided a skeleton. This skeleton contains the signature of the function that is going to be evolved. The signature specifies the inputs to the function and the return statement. In order to help avoid runtime errors, functions that implement protected operations (ie. division and logarithm) can also be included in the skeleton.
+
+When an individual in the G3P system is to be evaluated, the code from the individual is placed into the function signature, thus creating a complete function that can be executed. The output of this function on the test cases is compared to the target outputs to receive and error vector.
+
+As part of the G3P grammar definition, it is required to specify the number of variables usable by the system.~\cite{Forstenlechner:2017:eurogp} claims that 3 variables per data type is sufficient for all problems.
+
 \section{Limitation of Comparison}
 
 The problems described in section 3 were chosen to demonstrate a system's ability to perform general program synthesis tasks. Each system considered in the comparison is designed for different situations which resulted in a difficult comparison.
@@ -211,7 +222,7 @@ Flash Fill is not open-source, which makes it impossible to modify for new tasks
 	Access & \checkmark & $x$ & \checkmark & \checkmark \\
 	Decrement & \checkmark & $x$ & \checkmark & \checkmark \\
 \end{tabular}
-\caption{Results of all 4 systems on the Basic Execution Models problems from \cite{Gaunt2016}.  A check denotes the system could find a solution. An $x$ denotes the problem was fully posed to the system, but a solution was not found. The G3P system has not been tested on this problem set to our knowledge.}
+\caption{Results of all 4 systems on the Basic Execution Models problems from~\cite{Gaunt2016}.  A check denotes the system could find a solution. An $x$ denotes the problem was fully posed to the system, but a solution was not found. The G3P system has not been tested on this problem set to our knowledge.}
 \label{fig:results1}
 \end{figure}
 
@@ -249,7 +260,7 @@ Flash Fill is not open-source, which makes it impossible to modify for new tasks
 	Smallest & x & \checkmark & \checkmark & \checkmark \\
 	Syllables & x & x & \checkmark & x \\
 \end{tabular}
-\caption{Results of all 3 systems on the Software Synthesis Benchmark Suite from \cite{Helmuth2015b}. A check denotes the system could find a solution. An x denotes the problem was fully posed to the system, but a solution was not found. No symbol denotes the problem could not be fully posed to the system.}
+\caption{Results of all 3 systems on the Software Synthesis Benchmark Suite from~\cite{Helmuth2015b}. A check denotes the system could find a solution. An x denotes the problem was fully posed to the system, but a solution was not found. No symbol denotes the problem could not be fully posed to the system.}
 \label{fig:results2}
 \end{figure}
 
