@@ -9,7 +9,7 @@ A demonstrative problem set has been compiled that assess an IPS method's abilit
 \todo{We need to define exactly what we mean by ``solution'', since it's different
 	for GP and, e.g., MagicHaskeller. GP won't \emph{always} find a solution.}
 
-This investigation is exclusively considering a methods ability to find solutions. Other measures, such as runtime or hardware models, are not discussed. In order to asses if a method can find solutions to a problem, the problem must first be phrased, in its entirety, to the method. This is not always possible.
+This investigation is exclusively considering a methods ability to find solutions. Other measures, such as runtime or hardware models, are not thoroughly examined. In order to determine if a method can find solutions to a problem, the problem must first be phrased in its entirety to the method. This is not always possible.
 
 The conclusions drawn from this comparison will speak to the flexibility of each considered method, as well as each method's success rate.
 
@@ -23,13 +23,7 @@ To test Flash Fills performance with our problem set, an Excel spreadsheet with 
 
 Flash Fill is deterministic and analytic, thus it was only run once per problem on a single data set.
 
-Excel does not include a native vector or list data structure, and it is not clear what the best way to phrase problems that require vectors to Flash Fill. A string representation of vectors was attempted for some problems, as well as putting each item from each vector in a separate cell. These approaches occasionally yielded results, but it is not clear what the optimal usage is.
-
 It is not possible to pose tasks to Flash Fill that required multiple outputs. This includes problems that require printing values in addition to returning an output. Asking Flash Fill to generate each output value in separate cell was considered, but this would be two separate tasks and would not be comparable to other the other IPS methods.
-
-Flash Fill does not support vector types. If a problem specifies an input value will be a vector of a fixed length, the problem can be posed with each element of the vector in its own cell. If the vectors length is not fixed, this cannot be done, because a tabular structure cannot be formed. If a problem requires a vector output, it cannot be posed to Flash Fill with elements in their own cell because generating each output value would be a separate IPS task.
-
-Due to these shortcomings of Flash Fill, there are a number of problems in this comparison that Flash Fill was unable to attempt. This is discussed more in section 4.
 
 \subsection{MagicHaskeller}
 
@@ -47,13 +41,7 @@ This process relies heavily on memoization. Being a web hosted service, all Magi
 \label{fig:MHpred}
 \end{figure}
 
-Figure \ref{fig:MHpred} shows an example input predicate. Notice that multiple nested predicates can be supplied. The number of nested predicates that can be given to MagicHaskeller is very limited, and if too many predicates are given the system will produce memory errors. This is a consequence of MagicHaskeller being a web hosted service where resources are shared between all users. Due to this limitation, it was not possible to give MagicHaskeller the same training dataset as the other IPS methods. Although this weakens the presented results, it speaks to the usability and flexibility of the MagicHaskeller system.
-
-MagicHaskeller supports the common primitive data types such as: integers, floats, strings and characters. Vectors and tuples are also supported, witch greatly expands the number of problems that were able to be posed to MagicHaskeller.
-
-MagicHaskeller only allows for the synthesis of functions that produce a single output value. In order to pose question that require multiple outputs, MagicHaskeller was given predicates that specified a tuple as an output. For problems that specify that values should be printed in addition to the output value, it was considered sufficient if MagicHaskeller could synthesis a program that produced a single string containing all printed values (including whitespace and newline) as an element of its output tuple.
-
-Due to MagicHaskeller being hosted on the web, it is difficult to embed MagicHaskeller in other systems.
+Figure \ref{fig:MHpred} shows an example input predicate. Notice that multiple nested predicates can be supplied. MagicHaskeller supports the common primitive data types such as: integers, floats, strings and characters. Vectors and tuples are also supported, witch greatly expands the number of problems that were able to be posed to MagicHaskeller.
 
 \subsection{TerpreT}
 
@@ -176,6 +164,29 @@ Given that the Basic Execution Models problem set is designed to test a systems 
 \section{Limitation of Comparison}
 
 \todo[inline]{Write me!}
+The problems described in section 3 were chosen to demonstrate a systems ability to perform general program synthesis tasks. Each system considered in the comparison is designed for different situations which resulted in a difficult comparison.
+
+\subsection{Support For Multiple Outputs}
+
+A system's ability to produce multiple outputs is crucial to solving many of the problems considered in this comparison. This includes both values returned and values printed. If a system does not support printing values, it was considered sufficient to return a single string containing all printed text, including newlines, in addition to the other output values.
+
+Flash Fill only supports populating cells in a single column at once. The only way to produce multiple outputs using Flash Fill would be to generate each output value separately. Solving a problem in multiple parts was considered a fundamentally different IPS task, and thus a variety of problems were considered unable to be fully posed to Flash Fill.
+
+MagicHaskeller also only supports synthesizing programs that produce a single output, however MagicHaskeller supports the tuple data type. Given that elements of a tuple do not have to be of the same data type, it was deemed adequate for MagicHaskeller to produce a single tuple containing all outputs for problems that required multiple outputs. For problems that called for printing values, one of the elements of the output tuple would be a string containing all printed text, including newlines.
+
+\subsection{Supported Data Types}
+
+Many problems in the comparison required the handling of multiple data types, often including vectors.  Excel does not include a native vector or list data structure, and it is not clear what the best way to phrase problems that require vectors to Flash Fill. A string representation of vectors was attempted for some problems. If a problem specifies an input value will be a vector of fixed length, the problem can be posed with each element of the vector in its own cell. If the vectors length is not fixed, this cannot be done, because a tabular structure cannot be formed. If a problem requires a vector output, it cannot be posed to Flash Fill with elements in their own cell because generating each output value would be a separate IPS task. Due to this shortcoming of Flash Fill, there are a number of problems in this comparison that Flash Fill was unable to attempt.
+
+\subsection{Number of Training and Test Cases}
+
+The number of nested predicates that can be given to MagicHaskeller is very limited, and if too many predicates are given the system will produce memory errors. This is a consequence of MagicHaskeller being a web hosted service where resources are shared between all users. Due to this limitation, it was not possible to give MagicHaskeller the same training dataset as the other IPS methods. Although this weakens the presented results, it speaks to the usability and flexibility of the MagicHaskeller system.
+
+\subsection{Access To Systems}
+
+There is not publicly available implementation of TerpreT, and thus it is only known how TerpreT performs on the \emph{Basic Execution Models} problem set. It is unknown how TerpreT would perform on the \emph{General Program Synthesis Benchmark Suite}.
+
+\todo[inline]{TODO: Find out of G3P is available.}
 
 \section{Results}
 
@@ -186,16 +197,16 @@ Given that the Basic Execution Models problem set is designed to test a systems 
 \begin{tabular}{ r | c c c c }
 	& TerpreT & Flash Fill & MH & PushGP \\
 	\hline
-	Invert & \checkmark & x & \checkmark & \checkmark \\
+	Invert & \checkmark & $x$ & \checkmark & \checkmark \\
 	Prepend Zero & \checkmark & \checkmark & \checkmark & \checkmark \\
-	Binary Decrement & \checkmark & x & x & x \\
-	2BCSR & \checkmark & x & x & \checkmark \\
-	Full Adder & \checkmark & x & x & \checkmark \\
-	2 Bit Adder & \checkmark & x & x & x \\
-	Access & \checkmark & x & \checkmark & \checkmark \\
-	Decrement & \checkmark & x & \checkmark & \checkmark \\
+	Binary Decrement & \checkmark & $x$ & $x$ & $x$ \\
+	2BCSR & \checkmark &  & $x$ & \checkmark \\
+	Full Adder & \checkmark &  & $x$ & \checkmark \\
+	2 Bit Adder & \checkmark &  & x & $x$ \\
+	Access & \checkmark & $x$ & \checkmark & \checkmark \\
+	Decrement & \checkmark & $x$ & \checkmark & \checkmark \\
 \end{tabular}
-\caption{Results of all 4 systems on the Basic Execution Models problems from \cite{Gaunt2016}.  A check denotes the system could find a solution. An x denotes the problem was fully posed to the system, but a solution was not found. The G3P system has not been tested on this problem set to our knowledge.}
+\caption{Results of all 4 systems on the Basic Execution Models problems from \cite{Gaunt2016}.  A check denotes the system could find a solution. An $x$ denotes the problem was fully posed to the system, but a solution was not found. The G3P system has not been tested on this problem set to our knowledge.}
 \label{fig:results1}
 \end{figure}
 
@@ -242,7 +253,6 @@ Given that the Basic Execution Models problem set is designed to test a systems 
 
 \section{Conclusion}
 
-\todo[inline]{Limitations of the comparisons.}
 \todo[inline]{What does this mean for applications of IPS.}
 
 \section{Things to mention somewhere}
