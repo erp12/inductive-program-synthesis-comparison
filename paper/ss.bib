@@ -32,6 +32,74 @@
   publisher  = {ACM},
 }
 
+@article{Gulwani:2012:SDM:2240236.2240260,
+ author = {Gulwani, Sumit and Harris, William R. and Singh, Rishabh},
+ title = {Spreadsheet Data Manipulation Using Examples},
+ journal = {Commun. ACM},
+ issue_date = {August 2012},
+ volume = {55},
+ number = {8},
+ month = aug,
+ year = {2012},
+ issn = {0001-0782},
+ pages = {97--105},
+ numpages = {9},
+ url = {http://doi.acm.org/10.1145/2240236.2240260},
+ doi = {10.1145/2240236.2240260},
+ acmid = {2240260},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@inproceedings{harris2011spreadsheet,
+  title={Spreadsheet table transformations from examples},
+  author={Harris, William R and Gulwani, Sumit},
+  booktitle={ACM SIGPLAN Notices},
+  volume={46},
+  number={6},
+  pages={317--328},
+  year={2011},
+  organization={ACM}
+}
+
+@article{Singh:2012:LSS:2212351.2212356,
+ author = {Singh, Rishabh and Gulwani, Sumit},
+ title = {Learning Semantic String Transformations from Examples},
+ journal = {Proc. VLDB Endow.},
+ issue_date = {April 2012},
+ volume = {5},
+ number = {8},
+ month = apr,
+ year = {2012},
+ issn = {2150-8097},
+ pages = {740--751},
+ numpages = {12},
+ url = {http://dx.doi.org/10.14778/2212351.2212356},
+ doi = {10.14778/2212351.2212356},
+ acmid = {2212356},
+ publisher = {VLDB Endowment},
+} 
+
+@inproceedings{singh2012synthesizing,
+  title={Synthesizing number transformations from input-output examples},
+  author={Singh, Rishabh and Gulwani, Sumit},
+  booktitle={Computer Aided Verification},
+  pages={634--651},
+  year={2012},
+  organization={Springer}
+}
+
+@article{lau2003programming,
+  title={Programming by demonstration using version space algebra},
+  author={Lau, Tessa and Wolfman, Steven A and Domingos, Pedro and Weld, Daniel S},
+  journal={Machine Learning},
+  volume={53},
+  number={1-2},
+  pages={111--156},
+  year={2003},
+  publisher={Springer}
+}
+
 @PhdThesis{Helmuth2015,
   author      = {Thomas Helmuth},
   title       = {General Program Synthesis from Examples Using Genetic Programming with Parent Selection Based on Random Lexicographic Orderings of Test Cases},
@@ -115,14 +183,6 @@
   size     = {14 pages},
 }
 
-@Misc{Katayama2013,
-  author       = {Susumu Katayama},
-  title        = {MagicHaskeller on the Web: Automated Programming as a Service},
-  year         = {2013},
-  howpublished = {haskell-symposium},
-  abstract     = {The proposed demonstration will present our Web-based automatic programming tool, named MAGICHASKELLER ON THE WEB, which can help casual programming in Haskell. We will show how simple to use the tool is, and then evaluates its ability.},
-  keywords     = {Automatic programming, Inductive functional programming, Web application},
-}
 
 @Misc{Kitzelmann2009,
   author   = {Emanuel Kitzelmann},
@@ -241,6 +301,16 @@
   publisher = {Association for Computing Machinery (ACM)},
 }
 
+@inproceedings{katayama2013,
+ title = {MagicHaskeller on the Web: Automated Programming as a Service},
+ author={Katayama, Susumu},
+ booktitle = {Haskell '13: Proceedings of the 2013 ACM SIGPLAN Symposium on Haskell},
+ year = {2013},
+ isbn = {978-1-4503-2383-3},
+ location = {Boston, Massachusetts, USA},
+ publisher = {ACM},
+} 
+
 @InBook{Katayama2008,
   author    = {Katayama, Susumu},
   title     = {Efficient Exhaustive Generation of Functional Programs Using Monte-Carlo Search with Iterative Deepening},
@@ -255,14 +325,36 @@
   address   = {Berlin, Heidelberg},
 }
 
-@Article{Katayama2005,
-  author        = {Katayama, Susumu},
-  title         = {Systematic search for lambda expressions.},
-  journal       = {Trends in functional programming},
-  year          = {2005},
-  volume        = {6},
-  pages         = {111--126},
-  __markedentry = {[mm94978:]},
+@inproceedings{Katayama05,
+  author    = {Susumu Katayama},
+  title     = {Systematic search for lambda expressions},
+  booktitle = {Trends in Functional Programming},
+  year      = {2005},
+  pages     = {111-126},
+  crossref  = {DBLP:conf/sfp/2005},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+% Needed for a Katayama crossref
+@proceedings{DBLP:conf/sfp/2005,
+  editor    = {Marko C. J. D. van Eekelen},
+  title     = {Revised Selected Papers from the Sixth Symposium on Trends
+               in Functional Programming, TFP 2005, Tallinn, Estonia, 23-24
+               September 2005},
+  booktitle = {Trends in Functional Programming},
+  publisher = {Intellect},
+  series    = {Trends in Functional Programming},
+  volume    = {6},
+  year      = {2007},
+  isbn      = {978-1-84150-176-5},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{katayama2011magichaskeller,
+  title={MagicHaskeller: System demonstration},
+  author={Katayama, Susumu},
+  booktitle={Proceedings of AAIP 2011 4th International Workshop on Approaches and Applications of Inductive Programming},
+  year={2011}
 }
 
 @InCollection{Katayama2010,
@@ -278,6 +370,24 @@
   __markedentry = {[mm94978:6]},
   abstract      = {MagicHaskeller is our inductive functional programming library based on systematic search. In this paper we introduce two recent improvements to MagicHaskeller, i.e. 1) clarification and extension to arbitrary-rank polymorphism of its algorithm, and 2) efficiency improvement in its filtration algorithm that removes redundancy in the search results.},
   month         = jan,
+}
+
+@InProceedings{Forstenlechner:2017:eurogp,
+  author =	"Stefan Forstenlechner and David Fagan and Miguel Nicolau and Michael O'Neill",
+  title =	"A Grammar Design Pattern for Arbitrary
+ Program Synthesis Problems in Genetic
+ Programming",
+  booktitle =	"20th European Conference on Genetic Programming",
+  year = 	"2017",
+  NOeditor =	"",
+  pages = "In press"
+}
+
+@inproceedings{kitzelmann2011two,
+  title={Two New Operators for {IGOR2} to Increase Synthesis Efficieny},
+  author={Kitzelmann, Emanuel},
+  booktitle={Proceedings of AAIP 2011 4th International Workshop on Approaches and Applications of Inductive Programming},
+  year={2011}
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}
