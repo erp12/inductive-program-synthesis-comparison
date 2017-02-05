@@ -170,11 +170,11 @@ Given that the Basic Execution Models problem set is designed to test a systems 
 \section{Limitation of Comparison}
 
 \todo[inline]{Write me!}
-The problems described in section 3 were chosen to demonstrate a systems ability to perform general program synthesis tasks. Each system considered in the comparison is designed for different situations which resulted in a difficult comparison.
+The problems described in section 3 were chosen to demonstrate a system's ability to perform general program synthesis tasks. Each system considered in the comparison is designed for different situations which resulted in a difficult comparison.
 
 \subsection{Support For Multiple Outputs}
 
-A system's ability to produce multiple outputs is crucial to solving many of the problems considered in this comparison. This includes both values returned and values printed. If a system does not support printing values, it was considered sufficient to return a single string containing all printed text, including newlines, in addition to the other output values.
+The benchmark problems we consider have different requirements on their outputs, including some problems that print outputs, some that functionally return outputs, and one problem that requires both. If a system does not support printing values, it was considered sufficient to return a single string containing all printed text, including newlines, in addition to the other output values.
 
 Flash Fill only supports populating cells in a single column at once. The only way to produce multiple outputs using Flash Fill would be to generate each output value separately. Solving a problem in multiple parts was considered a fundamentally different IPS task, and thus a variety of problems were considered unable to be fully posed to Flash Fill.
 
@@ -182,7 +182,7 @@ MagicHaskeller also only supports synthesizing programs that produce a single ou
 
 \subsection{Supported Data Types}
 
-Many problems in the comparison required the handling of multiple data types, often including vectors.  Excel does not include a native vector or list data structure, and it is not clear what the best way to phrase problems that require vectors to Flash Fill. A string representation of vectors was attempted for some problems. If a problem specifies an input value will be a vector of fixed length, the problem can be posed with each element of the vector in its own cell. If the vectors length is not fixed, this cannot be done, because a tabular structure cannot be formed. If a problem requires a vector output, it cannot be posed to Flash Fill with elements in their own cell because generating each output value would be a separate IPS task. Due to this shortcoming of Flash Fill, there are a number of problems in this comparison that Flash Fill was unable to attempt.
+Many problems in the comparison required the handling of multiple data types, often including vectors.  Excel does not include a native vector or list data structure, and it is not clear what the best way to phrase problems that require vectors to Flash Fill. A string representation of vectors was attempted for some problems. If a problem specifies an input value will be a vector of fixed length, the problem can be posed with each element of the vector in its own cell. If the vector's length is not fixed, this cannot be done, because a tabular structure cannot be formed. If a problem requires a vector output, it cannot be posed to Flash Fill with elements in their own cell because generating each output value would be a separate IPS task. Due to this shortcoming of Flash Fill, there are a number of problems in this comparison that Flash Fill was unable to attempt.
 
 \subsection{Number of Training and Test Cases}
 
@@ -191,6 +191,8 @@ The number of nested predicates that can be given to MagicHaskeller is very limi
 \subsection{Access To Systems}
 
 There is not publicly available implementation of TerpreT, and thus it is only known how TerpreT performs on the \emph{Basic Execution Models} problem set. It is unknown how TerpreT would perform on the \emph{General Program Synthesis Benchmark Suite}.
+
+Flash Fill is not open-source, which makes it impossible to modify for new tasks.
 
 \todo[inline]{TODO: Find out of G3P is available.}
 
