@@ -91,15 +91,14 @@ Here's the citation \cite{Forstenlechner:2017:eurogp}.
 
 \section{Problems}
 \subsection{Basic Execution Models Problems}
-The first set of problems were taken from \cite{Gaunt2016} and were intended to demonstrate TerpreT's ability to synthesis programs in a variety of execution models that span multiple levels of abstraction. These execution models are: Turing Machine, Boolean Circuits, Basic Block, and Assembly Language. 
-
-As stated by \cite{Gaunt2016}, the problems in this set progress from more abstract execution models towards models which resemble assembly languages. This makes these problems demonstrative of how a system performs across a variety of low-level domains. 
- 
-The problems in this set are describes below:
+The first set of 8 problems, taken from \cite{Gaunt2016}, was designed to demonstrate TerpreT's ability to synthesis programs in a variety of execution models that span multiple levels of abstraction. These execution models are: Turing Machine, Boolean Circuits, Basic Block, and Assembly Language. As stated by \cite{Gaunt2016}, the problems in this set progress from more abstract execution models towards models which resemble assembly languages. These problems demonstrate how a system performs across a variety of low-level domains. 
+The problems in this set are described below:
 
 \subsubsection{Invert}
 
 Given a binary string (binary tape), invert all the bits.
+
+\todo[inline]{Tom: It might be good to explicitly describe, here or elsewhere, how you represent things like binary strings in each system. Such as, in Push, are these binary vectors of integers? Binary character strings? How about in Flash Fill and MH?}
 
 \subsubsection{Prepend Zero}
 
@@ -131,11 +130,13 @@ Given an input array, $V$ return a new array, $U$ such that $U_i = V_i - 1$.
 
 
 \subsection{General Program Synthesis Benchmark Suite}
-The second set of problems used in this comparison was proposed by \cite{Helmuth2015b} in order to provide the field of Genetic Programming with a set of non-trivial benchmark problems.
+The second set of problems used in this comparison was designed as a benchmark suite for general program synthesis \cite{Helmuth2015b}. The 29 problems here require the synthesis of programs with similar characteristics to programs that humans write. Each problem in this suite was taken from an introductory computer science textbook, and therefore emulates the type of programming expected of students who are learning to program. While these benchmarks were first used in genetic programming, they are designed to be usable in any inductive program synthesis system that supports the required data types.
 
-This problems set included problems that deal with multiple data types, including strings, numbers, boolean and vectors. There are also multiple problems in the set that require multiple output values, or printing certain values to the screen.
+The problems in this set include those that require a range of data types, including strings, integers, floats, characters, and vectors. Many of the problems require outputs to be printed in the style of standard output, and one problem requires multiple output values. Additionally, most of the problems require some level of control flow to solve, whether through iteration, recursion, conditional execution, or list-manipulating higher-order functions.
 
-Given that the Basic Execution Models problem set is designed to test a systems ability to perform in low-level domains (binary circuits, assembly language, etc), the General Program Synthesis Benchmark Suite is an excellent addition, given that the problems' origins assume a much higher-level implementation (ie. java).
+Where the Basic Execution Models problem set is designed to test a system's ability to perform in low-level domains (binary circuits, assembly language, etc), the General Program Synthesis Benchmark Suite tests the ability to perform higher-level tasks.
+
+Since we do not have space to describe all 29 problems here, consdering the following example: the Replace Space with Newline problem. In this problem, the input is a string, and the program must complete two tasks: it must print the input string after replacing each space character with a newline, and it must then functionally return the number of non-whitespace characters in the input string. At minimum, this problem requires the consideration of strings, characters, and printing; a solution will also likely include some type of iteration or string processing. The other 28 problems are thoroughly described in the original suite \cite{Helmuth2015b}.
 
 %\subsubsection{Number IO}
 %\subsubsection{Small or Large}
