@@ -48,7 +48,7 @@ The problems in this set are described below:
 
 In Flash Fill, binary strings were implemented as strings of $1$s and $0$s in a single cell that was set to the type "Text". In all other systems, the binary strings were implemented using vectors of boolean values.
 
-The TerpreT system was originally given between 5 and 16 input-output examples for each of these problems. PushGP, MagicHakeller, FlashFill were also given between 5 and 16 input-output examples for each problem, with certain edge cases manually included while other test cases were generated.
+The TerpreT system was originally given between 5 and 16 input-output examples for each of these problems. PushGP, MagicHaskeller, Flash Fill were also given between 5 and 16 input-output examples for each problem, with certain edge cases manually included while other test cases were generated.
 
 
 \subsection{General Program Synthesis Benchmark Suite}
@@ -112,7 +112,7 @@ Generated functions are tested against the input predicate, and a sample of pass
 
 MagicHaskeller was originally applied to a set of problems that mainly dealt with list manipulation. These types of prolbems are represeted in the problem set used in this comparison as well, but are generally more complex than what MagicHaskeller was shown to solve in~\cite{katayama2013}.
 
-For our experiments, we used the web hosted version of MagicHaskeller. When using the MagicHaskeller web service, all MagicHaskeller users share the same dynamic programming table used for memoization, and the users cannot select which functions are included when searching. Due to MagicHaskeller being hosted on the web, it is difficult to embed in other systems. One benefit of using the publicly hosted version of MagicHaskeller is that users can suggest new contributions to the dynamic programming table, which potentially improves the search space for all users upon the next update of the MagicHaskeller system. 
+For our experiments, we used the web hosted version of MagicHaskeller. When using the MagicHaskeller web service, all MagicHaskeller users share the same dynamic programming table used for memoization, and the users cannot select which functions are included when searching. One benefit of using the publicly hosted version of MagicHaskeller is that users can suggest new contributions to the dynamic programming table, which potentially improves the search space for all users upon the next update of the MagicHaskeller system. Due to MagicHaskeller being hosted on the web, it is difficult to embed in other systems.
 
 \begin{figure}
 \begin{verbatim}
@@ -124,7 +124,7 @@ For our experiments, we used the web hosted version of MagicHaskeller. When usin
 
 Figure \ref{fig:MHpred} shows an example input predicate. Notice that multiple nested predicates can be supplied. MagicHaskeller supports the common primitive data types such as: integers, floats, strings and characters. Vectors and tuples are also supported, witch greatly expands the number of problems that were able to be posed to MagicHaskeller.
 
-MagicHaskeller only allows for the synthesis of functions that produce a single output value. In order to pose questions that require multiple outputs, MagicHaskeller was given predicates that specified a tuple as an output. For problems that specify that values should be printed in addition to the output value, it was considered sufficient if MagicHaskeller could synthesis a program that produced a single string containing all printed values (including whitespace and newline) as an element of its output tuple.
+MagicHaskeller only allows for the synthesis of functions that produce a single output value. In order to pose questions that require multiple outputs, MagicHaskeller was given predicates that specified a tuple as an output. For problems that specify that values should be printed in addition to the output value, it was considered sufficient if MagicHaskeller could synthesis a program that produced a single string containing all printed values (including white-space and newline) as an element of its output tuple.
 
 \subsection{TerpreT}
 
@@ -134,7 +134,7 @@ The TerpreT system attempts to solve IPS problems using these back-end algorithm
 
 The FMGD and ILP back-end algorithms tackle problems through gradient based learning. The SMT and SKETCH back-end algorithms consider the IPS tasks be be  constraint satisfaction problems.
 
-Note that there is currently no publicly available implementation of TerpreT and thus only results on benchmark problems provided by the original authors could be obtained. It would be extremely valuable to compare TerpreT's performance on the rest of the problem set using in this paper once an implementation becomes available.
+Note that there is currently no publicly available implementation of TerpreT and thus only results on benchmark problems provided by the original authors could be obtained. It would be extremely valuable to compare TerpreT's performance on the rest of the problem set used in this paper once an implementation becomes available.
 
 \subsection{Genetic Programming}
 
@@ -286,10 +286,10 @@ The system that performed the best on the \emph{Basic Execution Models} problems
 Both genetic programming systems clearly outperformed Flash Fill and MagicHaskeller on the \emph{Software Synthesis Benchmark Suite}. PushGP solved  23 out of the 29 problems, and G3P solved 16 of the 29 problems.
 
 % Runtime and deterministic/stocastic
-It must be mentioned that there is an enormous difference in runtime and computation power required for these IPS systems. FlashFill and MagicHaskeller produce an output, or report failure, in near instantaneous time. TerpreT, PushGP  and G3P require many hours to complete a single run and due to their stochastic nature, often require many runs. It is not entirely uncommon to spend weeks of CPU time on multiple PushGP runs of a single problem and only encounter a small number of solutions, meanwhile MagicHaskeller can produce the same solution every time, nearly instantaneously. 
+It must be mentioned that there is an enormous difference in runtime and computation power required for these IPS systems. Flash Fill and MagicHaskeller produce an output, or report failure, in near instantaneous time. TerpreT, PushGP  and G3P require many hours to complete a single run and due to their stochastic nature, often require many runs. It is not entirely uncommon to spend weeks of CPU time on multiple PushGP runs of a single problem and only encounter a small number of solutions, meanwhile MagicHaskeller can produce the same solution every time, nearly instantaneously. 
 
 % Output readability
-Some of the considered IPS methods were designed with other functionality in mind, aside from solving IPS task. For example, MagicHaskeller, G3P, and TerpreT produce readable source code. PushGP produces code in the Push language, but it cannot be used outside of a Push interpreter and is not easily read by humans. FlashFill does not provide any access to the solution program.
+Some of the considered IPS methods were designed with other functionality in mind, aside from solving IPS task. For example, MagicHaskeller, G3P, and TerpreT produce readable source code. PushGP produces code in the Push language, but it cannot be used outside of a Push interpreter and is not easily read by humans. Flash Fill does not provide any access to the solution program.
 
 \begin{figure}
 \begin{tabular}{ r | l }
@@ -308,9 +308,9 @@ Example source code produced by MagicHaskeller is shown in in Figure \ref{fig:MH
 
 \section{Conclusion}
 
-This paper attempts to compare the TerpreT, PushGP, G3P, Flash Fill and MagicHaskeller inductive program sythesis systems. The comparison was carried out using problem sets that requires producing programs in low level domains, such as boolean logic, as well as high level domains that require the synthesis of programs similar to what humans write.
+This paper attempts to compare the TerpreT, PushGP, G3P, Flash Fill and MagicHaskeller inductive program synthesis systems. The comparison was carried out using problem sets that requires producing programs in low level domains, such as boolean logic, as well as high level domains that require the synthesis of programs similar to what humans write.
 
-The recently unveild TerpreT system shows effectiveness in low level domains, but there are results to suggest it can perform well on different kinds of problems. FlashFill performs quickly and adequately on some simple string manipulation task as designed, but did not show any capabilities of operating outside this narrow domain.MagicHaskeller is very capable of performing list comprehensions and certain other simple tasks, but consistently fails to solve problems that require a large number of training instances. PushGP continues to do reasonably well across a broad range of problems, but can be quite expensive when compared to Flash Fill and MagicHaskeller. Grammar Guided Genetic Programming has the added functionality over PushGP of producing usable source code in any language, while still finding solutions to almost as many problems.
+The recently unveiled TerpreT system shows effectiveness in low level domains, but there are no results to suggest it can perform well on different kinds of problems. Flash Fill performs quickly and adequately on some simple string manipulation task as designed, but did not show any capabilities of operating outside this narrow domain. MagicHaskeller is very capable of performing list comprehensions and certain other simple tasks, but consistently fails to solve problems that require a large number of training instances. PushGP continues to do reasonably well across a broad range of problems, but can be quite expensive when compared to Flash Fill and MagicHaskeller. Grammar Guided Genetic Programming has the added functionality over PushGP of producing usable source code in any language, while still finding solutions to almost as many problems.
 
 The most conclusive finding that has come out of this comparison is that not all IPS systems can be applied to the same problems. This makes comparison extremely difficult. As access to open source implementations of these systems become more available, it will be easier to extend them to allow for more supported data types, and other features that make comparison easier.
 
