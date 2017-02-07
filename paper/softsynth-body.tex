@@ -20,6 +20,8 @@ The conclusions drawn from this comparison will speak to the flexibility, and su
 
 \section{Problems}
 
+We take our problems from two sources of benchmark problems. The first set of problems exhibit low-level requirements at various levels of abstraction~\cite{Gaunt2016}. The second problem set requires the system to perform tasks similar to those we expect human programmers to perform\cite{Helmuth2015b}. Each is described in detail below.
+
 \subsection{Basic Execution Models Problems}
 
 The first set of 8 problems, taken from \cite{Gaunt2016}, was designed to demonstrate TerpreT's ability to synthesis programs in a variety of execution models that span multiple levels of abstraction. These execution models are: Turing Machine, Boolean Circuits, Basic Block, and Assembly Language. As stated by \cite{Gaunt2016}, the problems in this set progress from more abstract execution models towards models which resemble assembly languages. These problems demonstrate how a system performs across a variety of low-level domains. 
@@ -60,7 +62,7 @@ The TerpreT system was originally given between 5 and 16 input-output examples f
 
 
 \subsection{General Program Synthesis Benchmark Suite}
-The second set of problems used in this comparison was designed as a benchmark suite for general program synthesis \cite{Helmuth2015b}. The 29 problems here require the synthesis of programs with similar characteristics to programs that humans write. Each problem in this suite was taken from an introductory computer science textbook, and therefore emulates the type of programming expected of students who are learning to program. While these benchmarks were first used in genetic programming, they are designed to be usable in any inductive program synthesis system that supports the required data types.
+The second set of problems used in this comparison was designed as a benchmark suite for general program synthesis~\cite{Helmuth2015b}. The 29 problems here require the synthesis of programs with similar characteristics to programs that humans write. Each problem in this suite was taken from an introductory computer science textbook, and therefore emulates the type of programming expected of students who are learning to program. While these benchmarks were first used in genetic programming, they are designed to be usable in any inductive program synthesis system that supports the required data types.
 
 The problems in this set include those that require a range of data types, including strings, integers, floats, characters, and vectors. Many of the problems require outputs to be printed in the style of standard output, and one problem requires multiple output values. Additionally, most of the problems require some level of control flow to solve, whether through iteration, recursion, conditional execution, or list-manipulating higher-order functions.
 
@@ -70,14 +72,20 @@ Since we do not have space to describe all 29 problems here, we will only descri
 
 \begin{description}
 
+\item[Double Letters] \ \\
+Given an input string, a solution program must print the string, doubling every letter character and tripling every exclamation point character. All other non-alphabetic and non-exclamation characters should be printed a single time each.
+
 \item[Replace Space with Newline:]  \ \\
-The Replace Space with Newline problem. In this problem, the input is a string, and the program must complete two tasks: it must print the input string after replacing each space character with a newline, and it must then functionally return the number of non-whitespace characters in the input string. At minimum, this problem requires the consideration of strings, characters, and printing; a solution will also likely include some type of iteration or string processing. 
+In this problem, the input is a string, and the program must complete two tasks: it must print the input string after replacing each space character with a newline, and it must then functionally return the number of non-whitespace characters in the input string. At minimum, this problem requires the consideration of strings, characters, and printing; a solution will also likely include some type of iteration or string processing. 
 
-\item[adklkjh] \ \\
-adsfkj sflkj dsaflj asdlfj alsdjf lasdj fljsadl fepwafohg adsfkj sflkj dsaflj asdlfj alsdjf lasdj fljsadl fepwafohg adsfkj sflkj dsaflj asdlfj alsdjf lasdj fljsadl fepwafohg adsfkj sflkj dsaflj asdlfj alsdjf lasdj fljsadl fepwafohg adsfkj sflkj dsaflj asdlfj alsdjf lasdj fljsadl fepwafohg adsfkj sflkj dsaflj asdlfj alsdjf lasdj fljsadl fepwafohg adsfkj sflkj dsaflj asdlfj alsdjf lasdj fljsadl fepwafohg
+\item[Even Squares] \ \\
+Given an integer $0 < n < 10000$, print all of the positive even perfect squares less than $n$ on separate lines.
+
+\item[Count Odds] \ \\
+Given a vector containing at most 50 integers, return the number of integers in the vector that are odd.
+
 \end{description}
-
-The other 28 problems are thoroughly described in the original suite \cite{Helmuth2015b}.
+These four problems show the range of requirements presented in this suite, from the use of multiple data types to various control flow techniques. The other 25 problems are thoroughly described in the original suite~\cite{Helmuth2015b}. Specific implementation details can be found in an accompanying technical report~\cite{Helmuth:2015006:UM}.
 
 
 %\subsubsection{Number IO}
@@ -159,15 +167,13 @@ Note that there is currently no publicly available implementation of TerpreT and
 \subsection{Genetic Programming}
 
 Before the 1990s, evolutionary algorithms were generally only used for optimizing a fixed structure of values. Eventually, this was built upon in such as way that produced executable programs. This technique, named Genetic Programming (GP), is considered inductive program synthesis because it uses input-output examples (refered to as test cases in the field of GP) to evolve a function. In fact, IPS was one of the original motivations for early work in GP~\cite{Koza1992}.
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.33\textwidth]{res/EvolutionCycle}
 \caption{Evolutionary Computation process.}
 \label{fig:evo}
 \end{figure}
-
-Genetic Programming works by generating a initial population of random programs.  This population then follows the cycle in Figure \ref{fig:evo} until a solution is found or the run is considered a failure. To evaluate a program, it is given set of inputs and executed. The set of outputs produced by the program is compared with the desired outputs in order to produce a set of errors. 
+Genetic Programming works by generating a initial population of random programs.  This population then follows the cycle in Figure \ref{fig:evo} until a solution is found or the run is considered a failure. To evaluate a program, it is given set of inputs and executed. The set of outputs produced by the program is compared with the desired outputs in order to produce a set of errors.
 
 This set of errors is used in the selection phase to pick programs whose performance merit them to be parents of the next generation of the population. This is done via a variety of selection algorithms, although it has been shown that lexicase selection generally leads to more solutions for IPS tasks~\cite{Helmuth2015a, Helmuth2015c, Forstenlechner:2017:eurogp}.
 
@@ -185,8 +191,9 @@ PushGP was chosen as a comparison method because of its ability to evolve progra
 \item Return multiple outputs.
 \item Utilize iteration, recursion, conditional execution, and other more exotic control structures.
 \end{itemize}
-
 Given that the chosen problem set contains general software tasks that require all three of the above listed features, most commonly used Genetic Programming systems would be unable to adequately attempt to find a solution.
+
+One of Push's strongest features for program synthesis is the ability of a program to manipulate its own code as it runs~\cite{Spector2005}. In particular, a running Push program's code exists on a stack just like every other data type, the \texttt{exec} stack. Thus, a program can manipulate instructions on the \texttt{exec} stack using a variety of generic stack manipulation operations, as well as instructions that implement specific control flow structures such as loops, recursion, if, and when. These instructions allow for a wide range of control strategies that may be useful when presented with a general program synthesis problem.
 
 Implementations of PushGP systems are available in the Clojure programming language\footnote{https://github.com/lspector/Clojush}, as well as a new implementation in Python\footnote{https://github.com/erp12/Pysh}. The Basic Execution Models problems were run in the Python implementation of PushGP and the General Program Synthesis Benchmark Suite problems were run in the Clojure implementation. In both implementations, the instruction sets and genetic operators were identically implemented for this comparison.
 
@@ -324,7 +331,8 @@ Negative To Zero & \texttt{f = (map (\textbackslash b -> max b 0)} \\
 \label{fig:MHsolutions}
 \end{figure}
 
-Example source code produced by MagicHaskeller is shown in in Figure \ref{fig:MHsolutions}.
+Figure~\ref{fig:MHsolutions} gives the source code generated by MagicHaskeller to solve four of the problems. For example, the solution for Invert takes each element in the bit string, subtracts 1 from it, and takes the absolute value. The solution for Negative To Zero returns a vector containing either the original number or 0, whichever is greater, thus replacing all negative elements with zero. These examples make it clear that MagicHaskeller tends to produce small solutions when it solves a problem, making them much simpler to understand than solutions given by genetic programming. On the other hand, since it searches the exponential search space of possible programs, it is not able to solve problems that require larger programs to solve.
+
 
 \section{Conclusion}
 
