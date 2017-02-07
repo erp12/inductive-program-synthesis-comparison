@@ -16,6 +16,8 @@ This investigation is exclusively considering each method's ability to find solu
 
 It should be noted that we have much more experience using genetic programming than Flash Fill, MagicHakseller, and TerpreT. We made a best effort to become as familiar as possible with all methods used in this comparison. There is still a chance that these systems can be used in ways we are unaware of that could change the results this experiment.
 
+New test were run on the PushGP, MagicHaskeller and Flash Fill systems for this comparison. Results gathered for TerpreT and Grammar Guided Genetic Programming (G3P) were report by the original authors in~\cite{Gaunt2016} and ~\cite{Forstenlechner:2017:eurogp} respectively. The source code for G3P is available online, and more results could be gathered, but due to how recently the particular G3P technique in ~\cite{Forstenlechner:2017:eurogp} was proposed, no results have been gathered beyond what the original authors presented. There is no open source implementation of TerpreT yet.
+
 The conclusions drawn from this comparison will speak to the flexibility, and success rate, of each considered method when applied to general IPS tasks.
 
 \section{Problems}
@@ -72,19 +74,20 @@ Since we do not have space to describe all 29 problems here, we will only descri
 
 \begin{description}
 
-\item[Double Letters] \ \\
+\item[Double Letters:] \ \\
 Given an input string, a solution program must print the string, doubling every letter character and tripling every exclamation point character. All other non-alphabetic and non-exclamation characters should be printed a single time each.
 
 \item[Replace Space with Newline:]  \ \\
 In this problem, the input is a string, and the program must complete two tasks: it must print the input string after replacing each space character with a newline, and it must then functionally return the number of non-whitespace characters in the input string. At minimum, this problem requires the consideration of strings, characters, and printing; a solution will also likely include some type of iteration or string processing. 
 
-\item[Even Squares] \ \\
+\item[Even Squares:] \ \\
 Given an integer $0 < n < 10000$, print all of the positive even perfect squares less than $n$ on separate lines.
 
-\item[Count Odds] \ \\
+\item[Count Odds:] \ \\
 Given a vector containing at most 50 integers, return the number of integers in the vector that are odd.
 
 \end{description}
+
 These four problems show the range of requirements presented in this suite, from the use of multiple data types to various control flow techniques. The other 25 problems are thoroughly described in the original suite~\cite{Helmuth2015b}. Specific implementation details can be found in an accompanying technical report~\cite{Helmuth:2015006:UM}.
 
 
@@ -124,7 +127,9 @@ Below are descriptions of the five inductive program synthesis techniques compar
 
 \subsection{Flash Fill}
 
-Flash Fill, recently added to Microsoft Excel, uses version-space algebras to perform program synthesis from examples on string manipulation tasks~\cite{Gulwani2011}. It was designed to help non-programmers perform repetitive tasks that would otherwise require them to write Excel macro programs. As such, it is able to quickly create simple programs for one-off repetitive tasks in spreadsheet applications for non-programmers~\cite{Gulwani:2012:SDM:2240236.2240260, harris2011spreadsheet, Singh:2012:LSS:2212351.2212356, singh2012synthesizing}. Building on the use of version-space algebras for programming by demonstration~\cite{lau2003programming}, Flash Fill assumes few example inputs and must make simplifying assumptions about the problem space. In particular, the domain-specific language used here is designed for small string manipulation tasks that an end-user may want to perform without knowing how to program them. Adapting the technique for new domains would require a different domain-specific language that is carefully crafted to meet problem requirements while restrictive enough to allow for quick searching. Each different domain-specific language would also require a new synthesis technique; it is unclear whether Flash Fill will even be able to tackle many general program synthesis problems.
+Flash Fill, recently added to Microsoft Excel, uses version-space algebras to perform program synthesis from examples on string manipulation tasks~\cite{Gulwani2011}. It was designed to help non-programmers perform repetitive tasks that would otherwise require them to write Excel macro programs. As such, it is able to quickly create simple programs for one-off repetitive tasks in spreadsheet applications for non-programmers~\cite{Gulwani:2012:SDM:2240236.2240260, harris2011spreadsheet, Singh:2012:LSS:2212351.2212356, singh2012synthesizing}. 
+
+Building on the use of version-space algebras for programming by demonstration~\cite{lau2003programming}, Flash Fill assumes few example inputs and must make simplifying assumptions about the problem space. In particular, the domain-specific language used here is designed for small string manipulation tasks that an end-user may want to perform without knowing how to program them. Adapting the technique for new domains would require a different domain-specific language that is carefully crafted to meet problem requirements while restrictive enough to allow for quick searching. Each different domain-specific language would also require a new synthesis technique; it is unclear whether Flash Fill will even be able to tackle many general program synthesis problems.
 
 To test Flash Fills performance with our problem set, an Excel spreadsheet with one column per input and one column for output was created for each problem. Each spreadsheet included training data, which had both the input columns and output column populated, and unseen testing data, which left the output column cells empty. Flash Fill is deterministic and analytic, thus it was only run once per problem on a single data set.
 
@@ -132,7 +137,9 @@ It is not possible to pose tasks to Flash Fill that required multiple outputs. T
 
 \subsection{MagicHaskeller}
 
-MagicHaskeller~\cite{katayama2010,Katayama05} synthesizes functional Haskell programs through an exhaustive search of programs with the correct type signatures. It uses a Monte-Carlo algorithm to remove semantically equivalent programs from the search space~\cite{Katayama2008}. More recently, it has also integrated an analytic component based on \textsc{Igor2}~\cite{kitzelmann2011two}, which allows it to synthesize a greater range of programs than can be found in reasonable time using exhaustive search~\cite{katayama2011magichaskeller}. Additionally, a web interface is available running a time-limited version of MagicHaskeller intended as a Haskell teaching tool for new programmers~\cite{katayama2013}. These implementations make great use of Haskell's functional instructions, and they perform well on problems that require list manipulations and structural changes. While MagicHaskeller performs very quickly on simple problems without too many examples, it has trouble with problems that require a large number of examples to illuminate the relevant edge cases. Additionally, it seems to have trouble with problems that require conditional control flow.
+MagicHaskeller~\cite{katayama2010,Katayama05} synthesizes functional Haskell programs through an exhaustive search of programs with the correct type signatures. It uses a Monte-Carlo algorithm to remove semantically equivalent programs from the search space~\cite{Katayama2008}. More recently, it has also integrated an analytic component based on \textsc{Igor2}~\cite{kitzelmann2011two}, which allows it to synthesize a greater range of programs than can be found in reasonable time using exhaustive search~\cite{katayama2011magichaskeller}. Additionally, a web interface is available running a time-limited version of MagicHaskeller intended as a Haskell teaching tool for new programmers~\cite{katayama2013}. 
+
+These implementations make great use of Haskell's functional instructions, and they perform well on problems that require list manipulations and structural changes. While MagicHaskeller performs very quickly on simple problems without too many examples, it has trouble with problems that require a large number of examples to illuminate the relevant edge cases. Additionally, it seems to have trouble with problems that require conditional control flow.
 
 MagicHaskeller uses specifications in the form of a predicate consisting of example function calls and their desired outputs. To then synthesize a function, MagicHaskeller generates a stream of functions that have the same signature as the example function calls. Thus generated functions have the same number of inputs, the same input types, and the same output type.
 
@@ -142,13 +149,13 @@ MagicHaskeller was originally applied to a set of problems that mainly dealt wit
 
 For our experiments, we used the web hosted version of MagicHaskeller. When using the MagicHaskeller web service, all MagicHaskeller users share the same dynamic programming table used for memoization, and the users cannot select which functions are included when searching. One benefit of using the publicly hosted version of MagicHaskeller is that users can suggest new contributions to the dynamic programming table, which potentially improves the search space for all users upon the next update of the MagicHaskeller system. Due to MagicHaskeller being hosted on the web, it is difficult to embed in other systems.
 
-\begin{figure}
+\begin{figure*}
 \begin{verbatim}
-((f [1, 2, 3] == [0, 1, 2]) && (f [-1, 1] == [-2, 0]))  
+( ( f [ 1, 2, 3 ] == [ 0, 1, 2 ] ) && ( f [ -1, 1 ] == [ -2, 0 ] ) && ( f [ 7, 5, 4 ] == [ 6, 4, 3 ] ) )   
 \end{verbatim}
 \caption{An example predicate that can be supplied to MagicHaskeller. This particular predicate produces a solution to the Decrement problem.}
 \label{fig:MHpred}
-\end{figure}
+\end{figure*}
 
 Figure \ref{fig:MHpred} shows an example input predicate. Notice that multiple nested predicates can be supplied. MagicHaskeller supports the common primitive data types such as: integers, floats, strings and characters. Vectors and tuples are also supported, witch greatly expands the number of problems that were able to be posed to MagicHaskeller.
 
@@ -167,12 +174,14 @@ Note that there is currently no publicly available implementation of TerpreT and
 \subsection{Genetic Programming}
 
 Before the 1990s, evolutionary algorithms were generally only used for optimizing a fixed structure of values. Eventually, this was built upon in such as way that produced executable programs. This technique, named Genetic Programming (GP), is considered inductive program synthesis because it uses input-output examples (refered to as test cases in the field of GP) to evolve a function. In fact, IPS was one of the original motivations for early work in GP~\cite{Koza1992}.
+
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.33\textwidth]{res/EvolutionCycle}
+\includegraphics[width=0.4\textwidth]{res/EvolutionCycle}
 \caption{Evolutionary Computation process.}
 \label{fig:evo}
 \end{figure}
+
 Genetic Programming works by generating a initial population of random programs.  This population then follows the cycle in Figure \ref{fig:evo} until a solution is found or the run is considered a failure. To evaluate a program, it is given set of inputs and executed. The set of outputs produced by the program is compared with the desired outputs in order to produce a set of errors.
 
 This set of errors is used in the selection phase to pick programs whose performance merit them to be parents of the next generation of the population. This is done via a variety of selection algorithms, although it has been shown that lexicase selection generally leads to more solutions for IPS tasks~\cite{Helmuth2015a, Helmuth2015c, Forstenlechner:2017:eurogp}.
@@ -227,7 +236,9 @@ The G3P grammars do not contain any methods of printing or formatting output val
 
 \subsection{Supported Data Types}
 
-Many problems in the comparison required the handling of multiple data types, often including vectors.  Excel does not include a native vector or list data structure, and it is not clear what the best way to phrase problems that require vectors to Flash Fill. A string representation of vectors was attempted for some problems. If a problem specifies an input value will be a vector of fixed length, the problem can be posed with each element of the vector in its own cell. If the vector's length is not fixed, this cannot be done, because a tabular structure cannot be formed. If a problem requires a vector output, it cannot be posed to Flash Fill with elements in their own cell because generating each output value would be a separate IPS task. Due to this shortcoming of Flash Fill, there are a number of problems in this comparison that Flash Fill was unable to attempt.
+Many problems in the comparison required the handling of multiple data types, often including vectors.  
+
+Excel does not include a native vector or list data structure, and it is not clear what the best way to phrase problems that require vectors to Flash Fill. A string representation of vectors was attempted for some problems. If a problem specifies an input value will be a vector of fixed length, the problem can be posed with each element of the vector in its own cell. If the vector's length is not fixed, this cannot be done, because a tabular structure cannot be formed. If a problem requires a vector output, it cannot be posed to Flash Fill with elements in their own cell because generating each output value would be a separate IPS task. Due to this shortcoming of Flash Fill, there are a number of problems in this comparison that Flash Fill was unable to attempt.
 
 G3P supports list types, but the supported list types contain values of a single data type. In other words, G3P can create and manipulate integer lists that can only contain integer values. There is no list type that can hold values of arbitrary types. This limitation, combined with the previous mentioned lack of printing methods, resulted in no adequate G3P implementation of the "String Differences" problem.
 
@@ -318,18 +329,20 @@ It must be mentioned that there is an enormous difference in runtime and computa
 % Output readability
 Some of the considered IPS methods were designed with other functionality in mind, aside from solving IPS task. For example, MagicHaskeller, G3P, and TerpreT produce readable source code. PushGP produces code in the Push language, but it cannot be used outside of a Push interpreter and is not easily read by humans. Flash Fill does not provide any access to the solution program.
 
-\begin{figure}
+\begin{figure*}
 \begin{tabular}{ r | l }
 \textbf{Problem} & \textbf{Solution} \\
 \hline
 Invert & \texttt{f = (map (\textbackslash b -> abs(b -1 )))} \\
+Prepend Zero & \texttt{f = (0:)} \\
 Decrement & \texttt{f = (map (subtract 1))} \\ 
 String Lengths Backwards & \texttt{f = (\textbackslash a -> reverse (map length a))} \\
 Negative To Zero & \texttt{f = (map (\textbackslash b -> max b 0)} \\
+Smallest & \texttt{f = (\textbackslash a b c d -> min d (min c (min b a)))} \\
 \end{tabular}
 \caption{Some example solutions produced by MagicHaskeller.}
 \label{fig:MHsolutions}
-\end{figure}
+\end{figure*}
 
 Figure~\ref{fig:MHsolutions} gives the source code generated by MagicHaskeller to solve four of the problems. For example, the solution for Invert takes each element in the bit string, subtracts 1 from it, and takes the absolute value. The solution for Negative To Zero returns a vector containing either the original number or 0, whichever is greater, thus replacing all negative elements with zero. These examples make it clear that MagicHaskeller tends to produce small solutions when it solves a problem, making them much simpler to understand than solutions given by genetic programming. On the other hand, since it searches the exponential search space of possible programs, it is not able to solve problems that require larger programs to solve.
 
